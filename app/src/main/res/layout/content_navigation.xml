@@ -8,4 +8,19 @@
     tools:context=".NavigationActivity"
     tools:showIn="@layout/app_bar_navigation">
 
+    <TextView
+        android:id="@+id/default_text_main"
+        android:layout_width="302dp"
+        android:layout_height="149dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/main_text"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
