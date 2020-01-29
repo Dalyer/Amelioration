@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -80,19 +81,24 @@ public class NavigationActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.nav_new_workout_designer) {
+            Toast toast = Toast.makeText(this,
+                    getString(R.string.new_workout_designer_title), Toast.LENGTH_LONG);
+            toast.show();
+        } else if (id == R.id.nav_workouts) {
+            Toast toast = Toast.makeText(this,
+                    getString(R.string.workouts_title), Toast.LENGTH_LONG);
+            toast.show();
+        } else if (id == R.id.nav_settings) {
+            Toast toast = Toast.makeText(this,
+                    getString(R.string.settings_title), Toast.LENGTH_LONG);
+            toast.show();
+        } else if (id == R.id.nav_statistics) {
+            Toast toast = Toast.makeText(this,
+                    getString(R.string.statistics_title), Toast.LENGTH_LONG);
+            toast.show();
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

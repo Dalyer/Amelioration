@@ -7,4 +7,9 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="main_text">Create a workout out or pick one from the menu</string>
+    <string name="new_workout_designer_title">Add Workout Creator here.</string>
+    <string name="workouts_title">Workouts</string>
+    <string name="settings_title">Settings</string>
+    <string name="statistics_title">Statistics</string>
+    <string name="new_workout_title">New Workout</string>
 </resources>
