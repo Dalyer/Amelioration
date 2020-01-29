@@ -19,7 +19,7 @@
             android:title="@string/statistics_title" />
     </group>
 
-    <item android:title="Settings">
+    <item android:title="Settings"> <!--Figure out how to have the separator without a title-->
         <menu>
             <item
                 android:id="@+id/nav_settings"
