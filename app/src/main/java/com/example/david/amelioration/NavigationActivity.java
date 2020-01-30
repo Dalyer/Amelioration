@@ -91,8 +91,8 @@ public class NavigationActivity extends AppCompatActivity
                     getString(R.string.workouts_title), Toast.LENGTH_LONG);
             toast.show();
 
-            Intent intent = new Intent(this, WorkoutListActivity.class);
-            startActivity(intent);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.nav_view, new ItemFragment()).commit();
         } else if (id == R.id.nav_settings) {
             Toast toast = Toast.makeText(this,
                     getString(R.string.settings_title), Toast.LENGTH_LONG);

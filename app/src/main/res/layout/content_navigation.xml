@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".NavigationActivity"
+    android:id="@+id/original_fragment"
     tools:showIn="@layout/app_bar_navigation">
 
     <TextView
