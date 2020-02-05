@@ -90,7 +90,9 @@ public class NavigationActivity extends AppCompatActivity
             Toast toast = Toast.makeText(this,
                     getString(R.string.workouts_title), Toast.LENGTH_LONG);
             toast.show();
-
+            // Set WorkoutsFragment as active
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new WorkoutsFragment()).commit();
         } else if (id == R.id.nav_settings) {
             // Start SettingsActivity
             Intent intent = new Intent(this, SettingsActivity.class);
