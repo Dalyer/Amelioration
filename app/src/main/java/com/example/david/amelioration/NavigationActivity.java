@@ -99,8 +99,8 @@ public class NavigationActivity extends AppCompatActivity
             toast.show();
 
             //Open settings fragment
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new SettingsFragment()).commit();
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.fragment_container, new SettingsFragment()).commit();
         } else if (id == R.id.nav_statistics) {
             Toast toast = Toast.makeText(this,
                     getString(R.string.statistics_title), Toast.LENGTH_LONG);
