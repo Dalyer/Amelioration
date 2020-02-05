@@ -11,6 +11,7 @@
     <string name="settings_title">Settings</string>
     <string name="statistics_title">Statistics</string>
     <string name="new_workout_title">New Workout</string>
+    <string name="settings_text_placeholder">Here lies the settings Activity</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
