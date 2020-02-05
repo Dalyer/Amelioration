@@ -102,12 +102,9 @@ public class NavigationActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_statistics) {
-            Toast toast = Toast.makeText(this,
-                    getString(R.string.statistics_title), Toast.LENGTH_LONG);
-            toast.show();
-            // Set StatisticsTabbedFragment as active
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.fragment_container, new StatisticsTabbedFragment()).commit();
+            // Set StatisticsTabbedActivity
+            Intent intent = new Intent(this, StatisticsTabbedActivity.class);
+            startActivity(intent);
         }
 
 

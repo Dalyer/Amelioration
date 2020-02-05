@@ -21,9 +21,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivity"
+        <activity
+            android:name=".SettingsActivity"
             android:label="Settings"
-            android:parentActivityName=".NavigationActivity">
+            android:parentActivityName=".NavigationActivity"></activity>
+        <activity
+            android:name=".StatisticsTabbedActivity"
+            android:label="@string/title_activity_statistics_tabbed"
+            android:parentActivityName=".NavigationActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.david.amelioration.NavigationActivity" />
         </activity>
     </application>
 
