@@ -24,7 +24,7 @@
         <activity
             android:name=".SettingsActivity"
             android:label="Settings"
-            android:parentActivityName=".NavigationActivity"></activity>
+            android:parentActivityName=".NavigationActivity" />
         <activity
             android:name=".StatisticsTabbedActivity"
             android:label="@string/title_activity_statistics_tabbed"
@@ -34,6 +34,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.david.amelioration.NavigationActivity" />
         </activity>
+        <activity android:name=".WorkoutCreatorActivity"
+            android:label="Workout Creator"
+            android:parentActivityName=".NavigationActivity"/>
     </application>
 
 </manifest>
