@@ -45,6 +45,9 @@ public class NavigationActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new WorkoutsFragment()).commit();
+
     }
 
     @Override
