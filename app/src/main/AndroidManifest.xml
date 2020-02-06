@@ -36,7 +36,8 @@
         </activity>
         <activity android:name=".WorkoutCreatorActivity"
             android:label="Workout Creator"
-            android:parentActivityName=".NavigationActivity"/>
+            android:parentActivityName=".NavigationActivity"
+            android:theme='@style/AppTheme.NoActionBar'/>
     </application>
 
 </manifest>
