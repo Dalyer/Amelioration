@@ -29,7 +29,7 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
     @Override
     public void onBindViewHolder(@NonNull WorkoutListAdapter.ExerciseViewHolder exerciseViewHolder, int position) {
         Exercise mCurrent = mExerciseList.get(position);
-        exerciseViewHolder.exercisePlaceholder.setText(R.string.settings_text_placeholder); // fix all placeholders
+        exerciseViewHolder.exercisePlaceholder.setText(R.string.settings_text_placeholder); // TODO fix all placeholders
     }
 
     @Override
