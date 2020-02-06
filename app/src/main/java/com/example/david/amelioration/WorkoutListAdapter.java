@@ -49,7 +49,7 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
         }
         @Override
         public void onClick(View v) {
-
+            // TODO should an exercise builder here, maybe starts a new activity that gets the name etc
         }
     }
 }
