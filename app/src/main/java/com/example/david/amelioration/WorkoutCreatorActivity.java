@@ -22,7 +22,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_creator);
-
+    // TODO add saveInstanceState information
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -40,12 +40,9 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
             }
             });
 
-        // Put dummy data into exercise list
-        // TODO ultimately this won't be a thing everything will be added from the button
-        for (int i = 0; i <= 1; i++) {
-            Exercise x = new Exercise("New Exercise", "empty", 0);
-            mExerciseList.addLast(x);
-        }
+        // Add initial New Exercise Button
+        Exercise x = new Exercise("New Exercise", "empty", 0);
+        mExerciseList.addLast(x);
 
         // TODO at the end of the RecyclerView the last element should be a button for adding another element
 
