@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class WorkoutCreatorActivity extends AppCompatActivity {
-    private final LinkedList<Exercise> mExerciseList = new LinkedList<>();
+    private LinkedList<Exercise> mExerciseList = new LinkedList<>();
     private RecyclerView mRecyclerView;
     private WorkoutListAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -43,6 +43,9 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
             }
             });
 
+        if (savedInstanceState != null){
+            mExerciseList = savedInstanceState.getParcelable("test");
+        }
         // Add initial New Exercise Button
         Exercise x = new Exercise("New Exercise", "empty", 0);
         mExerciseList.addLast(x);
