@@ -31,7 +31,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int exerciseListSize = mExerciseList.size();
                 // add an item to this list
-                Exercise x = new Exercise("test trash", "add a description later", 10000);
+                Exercise x = new Exercise("test trash", "empty", 0);
                 mExerciseList.addLast(x);
                 mRecyclerView.getAdapter().notifyItemInserted(exerciseListSize-1);
                 mRecyclerView.smoothScrollToPosition(exerciseListSize-1);
@@ -42,7 +42,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         // TODO ultimately this won't be a thing everything will be added from the button
         for (int i = 0; i < 1; i++) {
             String tmp = "exercise" + i;
-            Exercise x = new Exercise(tmp, "add a description later", 10000);
+            Exercise x = new Exercise(tmp, "empty", 0);
             mExerciseList.addLast(x);
         }
 

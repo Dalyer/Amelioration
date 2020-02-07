@@ -65,8 +65,8 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
             Exercise currentExercise = mExerciseList.get(getAdapterPosition());
             Intent intent = new Intent(mContext, ExerciseCreatorActivity.class);
             intent.putExtra("name", currentExercise.getName());
-            intent.putExtra("name", currentExercise.getDescription());
-            intent.putExtra("name", currentExercise.getRestTime());
+            intent.putExtra("description", currentExercise.getDescription());
+            intent.putExtra("rest_time", currentExercise.getRestTime());
             mContext.startActivity(intent);
         }
     }
