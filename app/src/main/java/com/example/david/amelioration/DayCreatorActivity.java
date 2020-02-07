@@ -12,43 +12,49 @@ import android.view.View;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class WorkoutCreatorActivity extends AppCompatActivity {
-    private final LinkedList<Exercise> mExerciseList = new LinkedList<>();
+public class DayCreatorActivity extends AppCompatActivity {
+    private final LinkedList<Day> mDayList = new LinkedList<>();
     private RecyclerView mRecyclerView;
-    private WorkoutListAdapter mAdapter;
+    private DayListAdapter mAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_workout_creator);
-    // TODO add saveInstanceState information
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        setContentView(R.layout.activity_day_creator);
+        // TODO add saveInstanceState information
+        Toolbar toolbar = findViewById(R.id.toolbar_day_creator);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab_day_creator);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int exerciseListSize = mExerciseList.size();
+                int dayListSize = mDayList.size();
                 // add an item to this list
-                Exercise x = new Exercise("New Exercise", "empty", 0);
-                mExerciseList.addLast(x);
-                mRecyclerView.getAdapter().notifyItemInserted(exerciseListSize);
-                mRecyclerView.smoothScrollToPosition(exerciseListSize);
+                Exercise temp = new Exercise("New Exercise", "empty", 0);
+                LinkedList<Exercise> newList = new LinkedList<>();
+                newList.addLast(temp);
+                Day newDay = new Day("New Day", newList);
+                mDayList.addLast(newDay);
+                mRecyclerView.getAdapter().notifyItemInserted(dayListSize);
+                mRecyclerView.smoothScrollToPosition(dayListSize);
             }
-            });
+        });
 
-        // Add initial New Exercise Button
-        Exercise x = new Exercise("New Exercise", "empty", 0);
-        mExerciseList.addLast(x);
+        // Add initial New Day Button
+        Exercise temp = new Exercise("New Exercise", "empty", 0);
+        LinkedList<Exercise> initialList = new LinkedList<>();
+        initialList.addLast(temp);
+        Day initial = new Day("New Day", initialList);
+        mDayList.addLast(initial);
 
 
         // Get a handle to the RecyclerView
-        mRecyclerView = findViewById(R.id.recycler_view_workout_creator);
+        mRecyclerView = findViewById(R.id.recycler_view_day_creator);
         // create an adapter and supply the data to be displayed
-        mAdapter = new WorkoutListAdapter(this, mExerciseList);
+        mAdapter = new DayListAdapter(this, mDayList);
         // connect the adapter with the RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
         // give the RecycleView a default layout manager
@@ -63,7 +69,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
                                   RecyclerView.ViewHolder target) {
                 int from = viewHolder.getAdapterPosition();
                 int to = target.getAdapterPosition();
-                Collections.swap(mExerciseList, from, to);
+                Collections.swap(mDayList, from, to);
                 mAdapter.notifyItemMoved(from,to);
                 return true;
             }
@@ -71,7 +77,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder,
                                  int direction) {
-                mExerciseList.remove(viewHolder.getAdapterPosition());
+                mDayList.remove(viewHolder.getAdapterPosition());
                 mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
             }
         });
