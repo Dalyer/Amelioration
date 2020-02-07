@@ -22,6 +22,12 @@
 
     <include layout="@layout/content_exercise_creator" />
 
-    <!--TODO add a floating action button with a check mark for finishing stuff-->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_exercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_fab_confirm" />
 
 </android.support.design.widget.CoordinatorLayout>

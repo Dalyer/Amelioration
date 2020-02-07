@@ -28,6 +28,14 @@ public class ExerciseCreatorActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        FloatingActionButton fab = findViewById(R.id.fab_exercise);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO save data and add exercise to the database
+            }
+        });
+
         // Set values
         mExerciseName = getIntent().getStringExtra("name");
         mExerciseDescription = getIntent().getStringExtra("description");
