@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class WorkoutCreatorActivity extends AppCompatActivity {
-    private LinkedList<Exercise> mExerciseList = new LinkedList<>();
+    private LinkedList<Exercise> mExerciseList;
     private RecyclerView mRecyclerView;
     private WorkoutListAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -28,7 +28,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
     // TODO add saveInstanceState information
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -43,12 +43,12 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
             }
             });
 
-        if (savedInstanceState != null){
-            mExerciseList = savedInstanceState.getParcelable("test");
-        }
+
         // Add initial New Exercise Button
+        mExerciseList = new LinkedList<>();
         Exercise x = new Exercise("New Exercise", "empty", 0);
         mExerciseList.addLast(x);
+
 
 
         // Get a handle to the RecyclerView
