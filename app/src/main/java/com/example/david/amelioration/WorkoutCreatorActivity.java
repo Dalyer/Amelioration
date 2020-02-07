@@ -1,5 +1,6 @@
 package com.example.david.amelioration;
 
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +55,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         // give the RecycleView a default layout manager
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         // enable swiping to remove and dragging
         ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(

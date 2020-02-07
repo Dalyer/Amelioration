@@ -17,6 +17,7 @@ public class DayCreatorActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private DayListAdapter mAdapter;
 
+    // TODO add a name editor to the action bar to name the workout schedule
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
