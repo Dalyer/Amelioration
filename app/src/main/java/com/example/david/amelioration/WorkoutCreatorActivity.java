@@ -17,6 +17,8 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
     private final LinkedList<Exercise> mExerciseList = new LinkedList<>();
     private RecyclerView mRecyclerView;
     private WorkoutListAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private Parcelable mExerciseListState;
 
 
     @Override
@@ -27,7 +29,6 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +57,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         // give the RecycleView a default layout manager
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        mLayoutManager = mRecyclerView.getLayoutManager();
 
         // enable swiping to remove and dragging
         ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
@@ -80,4 +82,30 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         });
         helper.attachToRecyclerView(mRecyclerView);
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mExerciseListState = mLayoutManager.onSaveInstanceState();
+        outState.putParcelable("test", mExerciseListState);
+
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle outState) {
+        super.onRestoreInstanceState(outState);
+
+        // Retrieve list state and list/item positions
+        if (outState != null)
+            mExerciseListState = outState.getParcelable("test");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mExerciseListState != null) {
+            mLayoutManager.onRestoreInstanceState(mExerciseListState);
+        }
+    }
+
 }
