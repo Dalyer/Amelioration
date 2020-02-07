@@ -8,4 +8,104 @@
     tools:context=".ExerciseCreatorActivity"
     tools:showIn="@layout/activity_exercise_creator">
 
+    <Spinner
+        android:id="@+id/spinner4"
+        android:layout_width="83dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/rest_time_sec_tv"
+        app:layout_constraintTop_toBottomOf="@+id/exercise_rest_time_tv" />
+
+    <TextView
+        android:id="@+id/exercise_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Name:"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="Enter exercise name"
+        android:inputType="textPersonName"
+        app:layout_constraintBaseline_toBaselineOf="@+id/exercise_name_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/exercise_name_tv" />
+
+    <TextView
+        android:id="@+id/exercise_rest_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Rest Time:"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exercise_name_tv" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="83dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/rest_time_min_tv"
+        app:layout_constraintTop_toBottomOf="@+id/exercise_rest_time_tv" />
+
+    <TextView
+        android:id="@+id/rest_time_min_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Minutes:"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exercise_rest_time_tv" />
+
+    <TextView
+        android:id="@+id/rest_time_sec_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:text="Seconds:"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/rest_time_min_tv"
+        app:layout_constraintStart_toEndOf="@+id/spinner" />
+
+    <TextView
+        android:id="@+id/description_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Description:"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rest_time_min_tv" />
+
+    <EditText
+        android:id="@+id/description_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="Enter description "
+        android:inputType="textMultiLine"
+        app:layout_constraintBaseline_toBaselineOf="@+id/description_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/description_tv" />
+
 </android.support.constraint.ConstraintLayout>

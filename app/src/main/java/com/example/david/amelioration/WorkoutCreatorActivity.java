@@ -40,7 +40,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
 
         // Put dummy data into exercise list
         // TODO ultimately this won't be a thing everything will be added from the button
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 1; i++) {
             String tmp = "exercise" + i;
             Exercise x = new Exercise(tmp, "add a description later", 10000);
             mExerciseList.addLast(x);

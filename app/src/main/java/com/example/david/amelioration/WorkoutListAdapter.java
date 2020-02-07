@@ -1,6 +1,7 @@
 package com.example.david.amelioration;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,8 +33,8 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull WorkoutListAdapter.ExerciseViewHolder exerciseViewHolder, int position) {
-        Exercise mCurrent = mExerciseList.get(position);
-        exerciseViewHolder.exercisePlaceholder.setText(R.string.settings_text_placeholder); // TODO fix all placeholders
+        Exercise currentExercise = mExerciseList.get(position);
+        exerciseViewHolder.exerciseName.setText(currentExercise.getName()); // TODO fix all placeholders
     }
 
     @Override
@@ -42,19 +43,31 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
     }
 
     class ExerciseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public final TextView exercisePlaceholder; // change to an edit text or whatever is needed
+
+        // Member Variables
+        final TextView exerciseName; // change to an edit text or whatever is needed
         final WorkoutListAdapter mAdapter;
 
-        public ExerciseViewHolder(View itemView, WorkoutListAdapter adapter) {
+        // Constructor
+        ExerciseViewHolder(View itemView, WorkoutListAdapter adapter) {
             super(itemView);
-            exercisePlaceholder = itemView.findViewById(R.id.exercise);
+
+            // Initialize CardView Textview
+            exerciseName = itemView.findViewById(R.id.exercise_name_tv);
             this.mAdapter = adapter;
+
+
             itemView.setOnClickListener(this);
         }
         @Override
         public void onClick(View v) {
-            // TODO should an exercise builder here, maybe starts a new activity that gets the name etc
-
+            // Get current exercise selected and start the ExerciseCreatorActivity
+            Exercise currentExercise = mExerciseList.get(getAdapterPosition());
+            Intent intent = new Intent(mContext, ExerciseCreatorActivity.class);
+            intent.putExtra("name", currentExercise.getName());
+            intent.putExtra("name", currentExercise.getDescription());
+            intent.putExtra("name", currentExercise.getRestTime());
+            mContext.startActivity(intent);
         }
     }
 }
