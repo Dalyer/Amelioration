@@ -31,7 +31,7 @@ public class ExerciseCreatorActivity extends AppCompatActivity {
         // Set values
         mExerciseName = getIntent().getStringExtra("name");
         mExerciseDescription = getIntent().getStringExtra("description");
-        mExerciseRestTime = Integer.valueOf(getIntent().getStringExtra("rest_time"));
+        mExerciseRestTime = getIntent().getIntExtra("rest_time", 0);
         // Set data if data already there
         if (mExerciseDescription.equals("empty")) {
 
