@@ -52,7 +52,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recyclerview);
         // create an adapter and supply the data to be displayed
         mAdapter = new WorkoutListAdapter(this, mExerciseList);
-        // connect the adapte rwith the RecyclerView.
+        // connect the adapter with the RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
         // give the RecycleView a default layout manager
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));

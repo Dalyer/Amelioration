@@ -11,12 +11,16 @@ import android.widget.TextView;
 import java.util.LinkedList;
 
 public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.ExerciseViewHolder>    {
+
+    // Member variables
     private final LinkedList<Exercise> mExerciseList;
     private LayoutInflater mInflater;
+    private Context mContext;
 
-    public WorkoutListAdapter(Context context, LinkedList<Exercise> exerciseList) {
+    WorkoutListAdapter(Context context, LinkedList<Exercise> exerciseList) {
         mInflater = LayoutInflater.from(context);
         this.mExerciseList = exerciseList;
+        this.mContext = context;
     }
 
     @NonNull

@@ -34,10 +34,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.david.amelioration.NavigationActivity" />
         </activity>
-        <activity android:name=".WorkoutCreatorActivity"
+        <activity
+            android:name=".WorkoutCreatorActivity"
             android:label="Workout Creator"
             android:parentActivityName=".NavigationActivity"
-            android:theme='@style/AppTheme.NoActionBar'/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ExerciseCreatorActivity"
+            android:label="@string/title_activity_exercise_creator"
+            android:parentActivityName=".WorkoutCreatorActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.david.amelioration.WorkoutCreatorActivity" />
+        </activity>
     </application>
 
 </manifest>
