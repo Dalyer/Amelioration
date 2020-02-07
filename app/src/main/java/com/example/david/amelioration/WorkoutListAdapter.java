@@ -61,6 +61,7 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
         }
         @Override
         public void onClick(View v) {
+            // TODO this should start the WorkoutCreatorActivity instead, needs another DayCreatorActivity before in the hierarchy
             // Get current exercise selected and start the ExerciseCreatorActivity
             Exercise currentExercise = mExerciseList.get(getAdapterPosition());
             Intent intent = new Intent(mContext, ExerciseCreatorActivity.class);
