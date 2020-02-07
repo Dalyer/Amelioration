@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
+import java.util.Collections;
 import java.util.LinkedList;
 
 public class WorkoutCreatorActivity extends AppCompatActivity {
@@ -55,5 +57,28 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         // give the RecycleView a default layout manager
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // enable swiping to remove and dragging
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.DOWN | ItemTouchHelper.UP, ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView,
+                                  RecyclerView.ViewHolder viewHolder,
+                                  RecyclerView.ViewHolder target) {
+                int from = viewHolder.getAdapterPosition();
+                int to = target.getAdapterPosition();
+                Collections.swap(mExerciseList, from, to);
+                mAdapter.notifyItemMoved(from,to);
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder,
+                                 int direction) {
+                mExerciseList.remove(viewHolder.getAdapterPosition());
+                mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+            }
+        });
+        helper.attachToRecyclerView(mRecyclerView);
     }
 }
