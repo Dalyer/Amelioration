@@ -23,6 +23,7 @@
                     android:autofillHints="@string/workout_schedule_name"
                     android:gravity="start"
                     android:inputType="textCapSentences"/>
+            <!--TODO add a button for saving workout schedule-->
     </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
@@ -41,7 +42,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical" />
-
 
     </RelativeLayout>
 

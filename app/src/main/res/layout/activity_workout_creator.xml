@@ -23,6 +23,7 @@
                 android:autofillHints="@string/workout_day_name"
                 android:gravity="start"
                 android:inputType="textCapSentences"/>
+            <!--TODO add button for saving workout-->
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
