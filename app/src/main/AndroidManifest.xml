@@ -41,7 +41,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".DayCreatorActivity"
-            android:label="Workout Creator"
+            android:label=""
             android:parentActivityName=".NavigationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

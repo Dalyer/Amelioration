@@ -26,7 +26,7 @@ public class DayCreatorActivity extends AppCompatActivity {
         // TODO add saveInstanceState information
         Toolbar toolbar = findViewById(R.id.toolbar_day_creator);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         FloatingActionButton fab = findViewById(R.id.fab_day_creator);
         fab.setOnClickListener(new View.OnClickListener() {
