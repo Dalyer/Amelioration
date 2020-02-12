@@ -8,7 +8,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -19,6 +23,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
     private WorkoutListAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Parcelable mExerciseListState;
+    private EditText mWorkoutName;
 
 
     @Override
@@ -28,7 +33,24 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
     // TODO add saveInstanceState information
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true); // enables back button
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true); // enables up button
+
+        // Get view elements
+        mWorkoutName = findViewById(R.id.workout_name);
+        // Listen for entering a new name for scheduler
+        if (mWorkoutName != null) {
+            mWorkoutName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    Toast toast = Toast.makeText(WorkoutCreatorActivity.this, "hello", Toast.LENGTH_LONG);
+                    toast.show();   // remove later
+                    mWorkoutName.clearFocus();
+                    return false;
+                    // TODO save the schedule name stuff here
+                }
+            });
+        }
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
