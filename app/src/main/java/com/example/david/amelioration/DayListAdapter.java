@@ -10,11 +10,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.DayViewHolder>    {
 
     // Member variables
-    private final LinkedList<Day> mDayList;
+    private LinkedList<Day> mDayList; //cached copy of days
     private LayoutInflater mInflater;
     private Context mContext;
 
@@ -40,6 +41,11 @@ public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.DayViewH
     @Override
     public int getItemCount() {
         return mDayList.size();
+    }
+
+    void setDays(LinkedList<Day> days) {
+        mDayList = days;
+        notifyDataSetChanged();
     }
 
     class DayViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

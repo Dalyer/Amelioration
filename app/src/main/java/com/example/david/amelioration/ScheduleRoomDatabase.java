@@ -9,6 +9,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 @Database(entities = {Schedule.class}, version=1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class ScheduleRoomDatabase extends RoomDatabase {
@@ -54,12 +57,15 @@ public abstract class ScheduleRoomDatabase extends RoomDatabase {
             // Start the app with a clean database every time.
             // Not needed if you only populate the database
             // when it is first created
-//            mDao.deleteAll();
+            mDao.deleteAll();
 // TODO replace all this
-//            for (int i = 0; i <= words.length - 1; i++) {
-//                Word word = new Word(words[i]);
-//                mDao.insert(word);
-//            }
+            for (int i = 0; i <= words.length - 1; i++) {
+                LinkedList<Day> temp = new LinkedList<>();
+                LinkedList<Exercise> x = new LinkedList<>();
+                temp.add(0, new Day("test", x));
+                Schedule schedule = new Schedule(words[i], temp);
+                mDao.insert(schedule);
+            }
             return null;
         }
     }

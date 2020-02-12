@@ -7,28 +7,29 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 
 public class Converters {
     @TypeConverter
-    public String fromDayList(ArrayList<Day> workouts) {
+    public String fromDayList(LinkedList<Day> workouts) {
         if (workouts == null) {
             return (null);
         }
         Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<Day>>() {}.getType();
+        Type type = new TypeToken<LinkedList<Day>>() {}.getType();
         String json = gson.toJson(workouts, type);
         return json;
     }
 
     @TypeConverter
-    public ArrayList<Day> toDaysList(String daysString) {
+    public LinkedList<Day> toDaysList(String daysString) {
         if (daysString == null) {
             return (null);
         }
         Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<Day>>() {}.getType();
-        ArrayList<Day> daysList = gson.fromJson(daysString, type);
+        Type type = new TypeToken<LinkedList<Day>>() {}.getType();
+        LinkedList<Day> daysList = gson.fromJson(daysString, type);
         return daysList;
     }
 }

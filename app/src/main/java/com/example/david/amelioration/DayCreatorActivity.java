@@ -1,5 +1,8 @@
 package com.example.david.amelioration;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,14 +16,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 public class DayCreatorActivity extends AppCompatActivity {
     private final LinkedList<Day> mDayList = new LinkedList<>();
     private RecyclerView mRecyclerView;
     private DayListAdapter mAdapter;
     private EditText mScheduleName;
+    private ScheduleViewModel mScheduleViewModel;
 
 
 
@@ -31,6 +37,7 @@ public class DayCreatorActivity extends AppCompatActivity {
         // TODO add saveInstanceState information
         Toolbar toolbar = findViewById(R.id.toolbar_day_creator);
         setSupportActionBar(toolbar);
+
 
         // Get view elements
         mScheduleName = findViewById(R.id.schedule_name);
@@ -81,6 +88,19 @@ public class DayCreatorActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         // give the RecycleView a default layout manager
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // set view model
+        mScheduleViewModel = ViewModelProviders.of(this).get(ScheduleViewModel.class);
+
+        mScheduleViewModel.getAllSchedules().observe(this, new Observer<List<Schedule>>() {
+            @Override
+            public void onChanged(@Nullable final List<Schedule> schedule) {
+                // Update the cached copy of the words in the adapter.
+                LinkedList<Day> days = schedule.get(0).getWorkouts();
+                mAdapter.setDays(days);
+            }
+        });
+
 
         // enable swiping to remove and dragging
         ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(

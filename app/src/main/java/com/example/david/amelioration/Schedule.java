@@ -17,9 +17,9 @@ public class Schedule {
     private String mScheduleName;
 
     @NonNull
-    private ArrayList<Day> workouts;     // TODO add a typeConverter
+    private LinkedList<Day> workouts;     // TODO add a typeConverter
 
-    public Schedule(@NonNull String scheduleName,@NonNull ArrayList<Day> workouts) {
+    public Schedule(@NonNull String scheduleName,@NonNull LinkedList<Day> workouts) {
         this.mScheduleName = scheduleName;
         this.workouts = workouts;
     }
@@ -28,7 +28,7 @@ public class Schedule {
         return mScheduleName;
     }
 
-    public ArrayList<Day> getWorkouts() {
+    public LinkedList<Day> getWorkouts() {
         return workouts;
     }
 }
