@@ -3,7 +3,6 @@ package com.example.david.amelioration;
 import java.util.LinkedList;
 
 
-@Entity(tableName = )
 public class Day {
     private String name;
     private LinkedList<Exercise> exercises;
