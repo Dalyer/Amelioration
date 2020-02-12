@@ -6,6 +6,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 @Entity(tableName = "schedule_table")
@@ -16,9 +17,9 @@ public class Schedule {
     private String mScheduleName;
 
     @NonNull
-    private LinkedList<Day> workouts;     // TODO add a typeConverter
+    private ArrayList<Day> workouts;     // TODO add a typeConverter
 
-    public Schedule(@NonNull String scheduleName,@NonNull LinkedList<Day> workouts) {
+    public Schedule(@NonNull String scheduleName,@NonNull ArrayList<Day> workouts) {
         this.mScheduleName = scheduleName;
         this.workouts = workouts;
     }
@@ -27,7 +28,7 @@ public class Schedule {
         return mScheduleName;
     }
 
-    public LinkedList<Day> getWorkouts() {
+    public ArrayList<Day> getWorkouts() {
         return workouts;
     }
 }

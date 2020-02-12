@@ -1,10 +1,15 @@
 package com.example.david.amelioration;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
 import java.util.LinkedList;
 
-
 public class Day {
+
     private String name;
+
     private LinkedList<Exercise> exercises;
 
 

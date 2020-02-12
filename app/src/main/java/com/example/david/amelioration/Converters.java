@@ -6,20 +6,29 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 
 public class Converters {
     @TypeConverter
-    public static LinkedList<String> fromString(String value) {
-        Type listType = new TypeToken<LinkedList<String>>() {}.getType();
-        return new Gson().fromJson(value, listType);
+    public String fromDayList(ArrayList<Day> workouts) {
+        if (workouts == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<Day>>() {}.getType();
+        String json = gson.toJson(workouts, type);
+        return json;
     }
 
     @TypeConverter
-    public static String fromLinkedList(LinkedList<String> list) {
+    public ArrayList<Day> toDaysList(String daysString) {
+        if (daysString == null) {
+            return (null);
+        }
         Gson gson = new Gson();
-        String json = gson.toJson(list);
-        return json;
+        Type type = new TypeToken<ArrayList<Day>>() {}.getType();
+        ArrayList<Day> daysList = gson.fromJson(daysString, type);
+        return daysList;
     }
 }
