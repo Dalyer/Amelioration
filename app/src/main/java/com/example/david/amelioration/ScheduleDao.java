@@ -18,6 +18,6 @@ public interface ScheduleDao {
     @Query("DELETE FROM schedule_table")
     void deleteAll();
 
-    @Query("SELECT * from schedule_table ORDER BY scheduleName ASC")
+    @Query("SELECT * from schedule_table ORDER BY mScheduleName ASC")
     LiveData<List<Schedule>> getAllSchedules();
 }

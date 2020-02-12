@@ -13,13 +13,18 @@ public class Schedule {
 
     @PrimaryKey
     @NonNull
-    private String scheduleName;
+    private String mScheduleName;
 
     @NonNull
-    private LinkedList<Day> workouts;
+    private LinkedList<Day> workouts;     // TODO add a typeConverter
+
+    public Schedule(@NonNull String scheduleName,@NonNull LinkedList<Day> workouts) {
+        this.mScheduleName = scheduleName;
+        this.workouts = workouts;
+    }
 
     public String getScheduleName() {
-        return scheduleName;
+        return mScheduleName;
     }
 
     public LinkedList<Day> getWorkouts() {

@@ -4,11 +4,13 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 @Database(entities = {Schedule.class}, version=1, exportSchema = false)
+@TypeConverters({Converters.class})
 public abstract class ScheduleRoomDatabase extends RoomDatabase {
     private static ScheduleRoomDatabase INSTANCE;
     public abstract ScheduleDao scheduleDao();
