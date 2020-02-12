@@ -19,10 +19,12 @@
             app:popupTheme="@style/AppTheme.PopupOverlay">
                 <EditText android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/schedule_name"
                     android:hint="@string/workout_schedule_name"
                     android:autofillHints="@string/workout_schedule_name"
                     android:gravity="start"
-                    android:inputType="textCapSentences"/>
+                    android:inputType="textCapSentences"
+                    android:nextFocusDown="@+id/recycler_view_day_creator"/>
             <!--TODO add a button for saving workout schedule-->
     </android.support.v7.widget.Toolbar>
 

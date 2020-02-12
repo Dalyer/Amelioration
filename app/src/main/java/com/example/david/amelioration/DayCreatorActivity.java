@@ -7,7 +7,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -16,8 +20,9 @@ public class DayCreatorActivity extends AppCompatActivity {
     private final LinkedList<Day> mDayList = new LinkedList<>();
     private RecyclerView mRecyclerView;
     private DayListAdapter mAdapter;
+    private EditText mScheduleName;
 
-    // TODO add a name editor to the action bar to name the workout schedule
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +31,23 @@ public class DayCreatorActivity extends AppCompatActivity {
         // TODO add saveInstanceState information
         Toolbar toolbar = findViewById(R.id.toolbar_day_creator);
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Get view elements
+        mScheduleName = findViewById(R.id.schedule_name);
+        // Listen for entering a new name for scheduler
+        if (mScheduleName != null) {
+            mScheduleName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    Toast toast = Toast.makeText(DayCreatorActivity.this, "hello", Toast.LENGTH_LONG);
+                    toast.show();   // remove later
+                    mScheduleName.clearFocus();
+                    return false;
+                    // TODO save the schedule name stuff here
+                }
+            });
+        }
+
 
         FloatingActionButton fab = findViewById(R.id.fab_day_creator);
         fab.setOnClickListener(new View.OnClickListener() {
