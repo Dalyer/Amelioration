@@ -4,12 +4,14 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ScheduleRepository {
     // Member variables
     private ScheduleDao mScheduleDao;
     private LiveData<List<Schedule>> mAllSchedules;
+    private Schedule mSchedule;
 
     public ScheduleRepository(Application application) {
         ScheduleRoomDatabase db = ScheduleRoomDatabase.getDatabase(application);
@@ -27,6 +29,12 @@ public class ScheduleRepository {
 
     public void deleteAll() {
         new deleteAllAsyncTask(mScheduleDao).execute();
+    }
+
+    // Method has to be ran in a Async Task to avoid stalling the UI thread
+    public Schedule getSchedule(String scheduleName) {
+        mSchedule = mScheduleDao.getSchedule(scheduleName);
+        return mSchedule;
     }
 
     private static class deleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -57,4 +65,5 @@ public class ScheduleRepository {
             return null;
         }
     }
+
 }
