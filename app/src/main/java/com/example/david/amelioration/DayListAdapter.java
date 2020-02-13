@@ -18,11 +18,13 @@ public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.DayViewH
     private LinkedList<Day> mDayList; //cached copy of days
     private LayoutInflater mInflater;
     private Context mContext;
+    private String mScheduleName;
 
-    DayListAdapter(Context context, LinkedList<Day> dayList) {
+    DayListAdapter(Context context, LinkedList<Day> dayList, String scheduleName) {
         mInflater = LayoutInflater.from(context);
         this.mDayList = dayList;
         this.mContext = context;
+        this.mScheduleName = scheduleName;
     }
 
     @NonNull
@@ -46,6 +48,10 @@ public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.DayViewH
     void setDays(LinkedList<Day> days) {
         mDayList = days;
         notifyDataSetChanged();
+    }
+
+    void setScheduleName(String name) {
+        mScheduleName = name;
     }
 
     class DayViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -72,7 +78,7 @@ public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.DayViewH
             Day currentDay = mDayList.get(getAdapterPosition());
             Intent intent = new Intent(mContext, WorkoutCreatorActivity.class);
             intent.putExtra("name", currentDay.getName());
-           // intent.putExtra("Exercises", currentDay.getExercises()); //TODO this shit ain't gonna work
+            intent.putExtra("scheduleName", mScheduleName);
             mContext.startActivity(intent);
         }
     }

@@ -47,6 +47,7 @@ public class DayCreatorActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(DayCreatorActivity.this, "hello", Toast.LENGTH_LONG);
                     toast.show();   // remove later
                     mScheduleName.clearFocus();
+                    mAdapter.setScheduleName(mScheduleName.getText().toString());
                     return false;
                 }
             });
@@ -87,7 +88,7 @@ public class DayCreatorActivity extends AppCompatActivity {
         // Get a handle to the RecyclerView
         mRecyclerView = findViewById(R.id.recycler_view_day_creator);
         // create an adapter and supply the data to be displayed
-        mAdapter = new DayListAdapter(this, mDayList);
+        mAdapter = new DayListAdapter(this, mDayList, mScheduleState.getScheduleName());
         // connect the adapter with the RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
         // give the RecycleView a default layout manager
@@ -128,5 +129,9 @@ public class DayCreatorActivity extends AppCompatActivity {
     public void saveSchedule(View view) {
         mScheduleState.updateWorkouts(mDayList);
         mScheduleRepository.insert(mScheduleState);
+    }
+
+    public String getScheduleName() {
+        return mScheduleState.getScheduleName();
     }
 }
