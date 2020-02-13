@@ -119,6 +119,11 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         helper.attachToRecyclerView(mRecyclerView);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //TODO update layout from database
+    }
 
     public void saveWorkout(View view) {
         new getScheduleAsyncTask(mScheduleRepository, mScheduleName, mDayName, mExerciseList, mWorkoutName.getText().toString()).execute();

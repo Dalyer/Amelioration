@@ -121,6 +121,12 @@ public class DayCreatorActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        // TODO update layout from database
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         mScheduleState.updateWorkouts(mDayList);
