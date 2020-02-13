@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity {
     private ScheduleRepository mScheduleRepository;
@@ -27,6 +28,8 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mScheduleRepository.deleteAll();
+                Toast toast = Toast.makeText(SettingsActivity.this, "Database Cleared", Toast.LENGTH_LONG);
+                toast.show();
             }
         });
         clearDatabaseAlert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
