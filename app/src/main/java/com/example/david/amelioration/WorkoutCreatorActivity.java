@@ -133,4 +133,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         }
     }
 
+    public void saveWorkout(View view) {
+        // TODO save workout data here
+    }
 }
