@@ -24,5 +24,14 @@ public class Day {
         return exercises;
     }
 
+    // setters
 
+    public void updateExercises(LinkedList<Exercise> updatedExercises) {
+        exercises = updatedExercises;
+    }
+
+
+    public void updateName(String workoutName) {
+        name = workoutName;
+    }
 }
