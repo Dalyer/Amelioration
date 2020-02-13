@@ -43,6 +43,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         mScheduleRepository = new ScheduleRepository(getApplication());
         // get day name for current workout
         mDayName = getIntent().getStringExtra("name");
+        mScheduleName = getIntent().getStringExtra("scheduleName");
 
         // Get day name
         mWorkoutName = findViewById(R.id.workout_name);
