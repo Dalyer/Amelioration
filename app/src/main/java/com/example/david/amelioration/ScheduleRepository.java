@@ -25,6 +25,24 @@ public class ScheduleRepository {
         new insertAsyncTask(mScheduleDao).execute(schedule);
     }
 
+    public void deleteAll() {
+        new deleteAllAsyncTask(mScheduleDao).execute();
+    }
+
+    private static class deleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
+        private ScheduleDao mAsyncTaskDao;
+
+        deleteAllAsyncTask(ScheduleDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mAsyncTaskDao.deleteAll();
+            return null;
+        }
+    }
+
     private static class insertAsyncTask extends AsyncTask<Schedule, Void, Void> {
 
         private ScheduleDao mAsyncTaskDao;
