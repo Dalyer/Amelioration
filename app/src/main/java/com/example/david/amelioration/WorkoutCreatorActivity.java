@@ -24,6 +24,9 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private Parcelable mExerciseListState;
     private EditText mWorkoutName;
+    private Day mDayState;
+    private String dayName;
+    private ScheduleRepository mScheduleRepository;
 
 
     @Override
@@ -33,9 +36,13 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
     // TODO add saveInstanceState information
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true); // enables up button
 
-        // Get view elements
+        // set up database repository
+        mScheduleRepository = new ScheduleRepository(getApplication());
+        // get day name for current workout
+        dayName = getIntent().getStringExtra("name");
+
+        // Get day name
         mWorkoutName = findViewById(R.id.workout_name);
         // Listen for entering a new name for scheduler
         if (mWorkoutName != null) {
@@ -70,7 +77,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         mExerciseList = new LinkedList<>();
         Exercise x = new Exercise("New Exercise", "empty", 0);
         mExerciseList.addLast(x);
-
+        mDayState = new Day(dayName, mExerciseList);
 
 
         // Get a handle to the RecyclerView
@@ -135,5 +142,6 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
 
     public void saveWorkout(View view) {
         // TODO save workout data here
+        // TODO need to go into the existing database table find the matching day then replace the day with the updated copy
     }
 }

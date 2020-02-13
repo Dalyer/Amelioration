@@ -59,7 +59,7 @@ public class DayCreatorActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int dayListSize = mDayList.size();
                 // add an item to this list
-                Exercise temp = new Exercise("New Exercise", "empty", 0);
+                Exercise temp = new Exercise("New Exercise", "empty", 0); // TODO all names need to be unique or an id should be created as well
                 LinkedList<Exercise> newList = new LinkedList<>();
                 newList.addLast(temp);
                 Day newDay = new Day("New Day", newList);
