@@ -1,9 +1,5 @@
 package com.example.david.amelioration;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,10 +13,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
+
 
 public class DayCreatorActivity extends AppCompatActivity {
     private final LinkedList<Day> mDayList = new LinkedList<>();
@@ -52,25 +48,9 @@ public class DayCreatorActivity extends AppCompatActivity {
                     toast.show();   // remove later
                     mScheduleName.clearFocus();
                     return false;
-                    // TODO save the schedule name stuff here
                 }
             });
         }
-
-        // Create a new database entity
-        // Make empty exercise object
-        Exercise exerciseBase = new Exercise("New Exercise", "empty", 0);
-        LinkedList<Exercise> exerciseList = new LinkedList<>();
-        exerciseList.addLast(exerciseBase);
-        // create base day object
-        Day dayBase = new Day("New Day", exerciseList);
-        LinkedList<Day> dayList = new LinkedList<>();
-        dayList.addLast(dayBase);
-        // Create Schedule
-        mScheduleState = new Schedule(mScheduleName.getText().toString(), dayList); // continually add to this and save it on state save
-        // Get schedule repository
-        mScheduleRepository = new ScheduleRepository(getApplication());
-        // Insert basic schedule
 
 
         FloatingActionButton fab = findViewById(R.id.fab_day_creator);
@@ -86,15 +66,22 @@ public class DayCreatorActivity extends AppCompatActivity {
                 mDayList.addLast(newDay);
                 mRecyclerView.getAdapter().notifyItemInserted(dayListSize);
                 mRecyclerView.smoothScrollToPosition(dayListSize);
+                // Save schedule state here?
             }
         });
 
-        // Add initial New Day Button
-        Exercise temp = new Exercise("New Exercise", "empty", 0);
-        LinkedList<Exercise> initialList = new LinkedList<>();
-        initialList.addLast(temp);
-        Day initial = new Day("New Day", initialList);
-        mDayList.addLast(initial);
+        // Create a new database entry
+        // Make empty exercise object
+        Exercise exerciseBase = new Exercise("New Exercise", "empty", 0);
+        LinkedList<Exercise> exerciseList = new LinkedList<>();
+        exerciseList.addLast(exerciseBase);
+        // create base day object
+        Day dayBase = new Day("New Day", exerciseList);
+        mDayList.addLast(dayBase);
+        // Create Schedule
+        mScheduleState = new Schedule(mScheduleName.getText().toString(), mDayList); // continually add to this and save it on state save
+        // Get schedule repository
+        mScheduleRepository = new ScheduleRepository(getApplication());
 
 
         // Get a handle to the RecyclerView
@@ -105,18 +92,6 @@ public class DayCreatorActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         // give the RecycleView a default layout manager
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-//        // set view model
-//        mScheduleViewModel = ViewModelProviders.of(this).get(ScheduleViewModel.class);
-//
-//        mScheduleViewModel.getAllSchedules().observe(this, new Observer<List<Schedule>>() {
-//            @Override
-//            public void onChanged(@Nullable final List<Schedule> schedule) {
-//                // Update the cached copy of the words in the adapter.
-//                LinkedList<Day> days = schedule.get(0).getWorkouts();
-//                mAdapter.setDays(days);
-//            }
-//        });
 
 
         // enable swiping to remove and dragging
@@ -138,12 +113,20 @@ public class DayCreatorActivity extends AppCompatActivity {
                                  int direction) {
                 mDayList.remove(viewHolder.getAdapterPosition());
                 mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                // save schedule state here?
             }
         });
         helper.attachToRecyclerView(mRecyclerView);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mScheduleState.updateWorkouts(mDayList);
+    }
+
     public void saveSchedule(View view) {
+        mScheduleState.updateWorkouts(mDayList);
         mScheduleRepository.insert(mScheduleState);
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface ScheduleDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Schedule schedule);
 
     @Query("DELETE FROM schedule_table")

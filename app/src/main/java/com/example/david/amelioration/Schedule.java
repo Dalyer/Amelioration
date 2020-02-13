@@ -23,6 +23,7 @@ public class Schedule {
         this.mScheduleName = scheduleName;
         this.workouts = workouts;
     }
+    // getters
 
     public String getScheduleName() {
         return mScheduleName;
@@ -30,5 +31,18 @@ public class Schedule {
 
     public LinkedList<Day> getWorkouts() {
         return workouts;
+    }
+
+    // setters
+    public void addWorkout(Day workout) {
+        workouts.addLast(workout);
+    }
+
+    public void removeWorkout(int workout){
+        workouts.remove(workout);
+    }
+
+    public void updateWorkouts(LinkedList<Day> updatedWorkouts) {
+        workouts = updatedWorkouts;
     }
 }
