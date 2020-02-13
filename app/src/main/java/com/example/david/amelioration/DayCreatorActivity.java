@@ -2,6 +2,7 @@ package com.example.david.amelioration;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,8 @@ public class DayCreatorActivity extends AppCompatActivity {
     private DayListAdapter mAdapter;
     private EditText mScheduleName;
     private ScheduleViewModel mScheduleViewModel;
+    private ScheduleRepository mScheduleRepository;
+    private Schedule mScheduleState;
 
 
 
@@ -37,7 +40,6 @@ public class DayCreatorActivity extends AppCompatActivity {
         // TODO add saveInstanceState information
         Toolbar toolbar = findViewById(R.id.toolbar_day_creator);
         setSupportActionBar(toolbar);
-
 
         // Get view elements
         mScheduleName = findViewById(R.id.schedule_name);
@@ -54,6 +56,21 @@ public class DayCreatorActivity extends AppCompatActivity {
                 }
             });
         }
+
+        // Create a new database entity
+        // Make empty exercise object
+        Exercise exerciseBase = new Exercise("New Exercise", "empty", 0);
+        LinkedList<Exercise> exerciseList = new LinkedList<>();
+        exerciseList.addLast(exerciseBase);
+        // create base day object
+        Day dayBase = new Day("New Day", exerciseList);
+        LinkedList<Day> dayList = new LinkedList<>();
+        dayList.addLast(dayBase);
+        // Create Schedule
+        mScheduleState = new Schedule(mScheduleName.getText().toString(), dayList); // continually add to this and save it on state save
+        // Get schedule repository
+        mScheduleRepository = new ScheduleRepository(getApplication());
+        // Insert basic schedule
 
 
         FloatingActionButton fab = findViewById(R.id.fab_day_creator);
@@ -89,17 +106,17 @@ public class DayCreatorActivity extends AppCompatActivity {
         // give the RecycleView a default layout manager
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // set view model
-        mScheduleViewModel = ViewModelProviders.of(this).get(ScheduleViewModel.class);
-
-        mScheduleViewModel.getAllSchedules().observe(this, new Observer<List<Schedule>>() {
-            @Override
-            public void onChanged(@Nullable final List<Schedule> schedule) {
-                // Update the cached copy of the words in the adapter.
-                LinkedList<Day> days = schedule.get(0).getWorkouts();
-                mAdapter.setDays(days);
-            }
-        });
+//        // set view model
+//        mScheduleViewModel = ViewModelProviders.of(this).get(ScheduleViewModel.class);
+//
+//        mScheduleViewModel.getAllSchedules().observe(this, new Observer<List<Schedule>>() {
+//            @Override
+//            public void onChanged(@Nullable final List<Schedule> schedule) {
+//                // Update the cached copy of the words in the adapter.
+//                LinkedList<Day> days = schedule.get(0).getWorkouts();
+//                mAdapter.setDays(days);
+//            }
+//        });
 
 
         // enable swiping to remove and dragging
@@ -124,5 +141,9 @@ public class DayCreatorActivity extends AppCompatActivity {
             }
         });
         helper.attachToRecyclerView(mRecyclerView);
+    }
+
+    public void saveSchedule(View view) {
+        mScheduleRepository.insert(mScheduleState);
     }
 }

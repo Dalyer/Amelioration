@@ -22,4 +22,5 @@
     <string name="title_activity_exercise_creator">ExerciseCreatorActivity</string>
     <string name="workout_schedule_name">New Workout Schedule</string>
     <string name="workout_day_name">Workout Name</string>
+    <string name="save_button_text">Save</string>
 </resources>

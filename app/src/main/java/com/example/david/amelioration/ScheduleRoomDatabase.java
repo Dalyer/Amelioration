@@ -57,15 +57,15 @@ public abstract class ScheduleRoomDatabase extends RoomDatabase {
             // Start the app with a clean database every time.
             // Not needed if you only populate the database
             // when it is first created
-            mDao.deleteAll();
-// TODO replace all this
-            for (int i = 0; i <= words.length - 1; i++) {
-                LinkedList<Day> temp = new LinkedList<>();
-                LinkedList<Exercise> x = new LinkedList<>();
-                temp.add(0, new Day("test", x));
-                Schedule schedule = new Schedule(words[i], temp);
-                mDao.insert(schedule);
-            }
+//            mDao.deleteAll();
+//// TODO replace all this
+//            for (int i = 0; i <= words.length - 1; i++) {
+//                LinkedList<Day> temp = new LinkedList<>();
+//                LinkedList<Exercise> x = new LinkedList<>();
+//                temp.add(0, new Day("test", x));
+//                Schedule schedule = new Schedule(words[i], temp);
+//                mDao.insert(schedule);
+//            }
             return null;
         }
     }
