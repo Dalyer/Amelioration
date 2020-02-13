@@ -122,8 +122,6 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         new getScheduleAsyncTask(mScheduleRepository, mScheduleName, mDayName, mExerciseList, mWorkoutName.getText().toString()).execute();
         Toast toast = Toast.makeText(WorkoutCreatorActivity.this, "Workout Saved", Toast.LENGTH_SHORT);
         toast.show();
-        // TODO save workout data here
-        // TODO need to go into the existing database table find the matching day then replace the day with the updated copy
     }
 
     private static class getScheduleAsyncTask extends AsyncTask<String, Void, Schedule> {
