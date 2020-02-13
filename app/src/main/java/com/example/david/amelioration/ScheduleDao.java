@@ -7,6 +7,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Dao
@@ -20,4 +21,7 @@ public interface ScheduleDao {
 
     @Query("SELECT * from schedule_table ORDER BY mScheduleName ASC")
     LiveData<List<Schedule>> getAllSchedules();
+
+    @Query("SELECT * from schedule_table WHERE mScheduleName IS (:scheduleName)")
+    Schedule getSchedule(String scheduleName);
 }
