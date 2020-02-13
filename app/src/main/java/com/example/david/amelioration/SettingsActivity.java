@@ -7,11 +7,13 @@ import android.view.View;
 import android.support.v7.app.AlertDialog;
 
 public class SettingsActivity extends AppCompatActivity {
+    private ScheduleRepository mScheduleRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        mScheduleRepository = new ScheduleRepository(getApplication());
     }
 
     public void clearDatabase(View view) {
@@ -24,7 +26,7 @@ public class SettingsActivity extends AppCompatActivity {
         clearDatabaseAlert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // clear the database
+                mScheduleRepository.deleteAll();
             }
         });
         clearDatabaseAlert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -37,5 +39,5 @@ public class SettingsActivity extends AppCompatActivity {
         clearDatabaseAlert.show();
 
     }
-}
 
+}
