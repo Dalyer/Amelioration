@@ -70,6 +70,7 @@ public class ExerciseCreatorActivity extends AppCompatActivity {
         new updateExerciseAsyncTask(mRepository, mScheduleName, mExerciseName, mWorkoutName, mExerciseDescription, mExerciseRestTime);
         Toast toast = Toast.makeText(this, "Exercise Saved", Toast.LENGTH_SHORT);
         toast.show();
+        finish();
     }
 
     private static class updateExerciseAsyncTask extends AsyncTask<String, Void, Schedule> {
