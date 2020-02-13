@@ -129,6 +129,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         new getScheduleAsyncTask(mScheduleRepository, mScheduleName, mDayName, mExerciseList, mWorkoutName.getText().toString()).execute();
         Toast toast = Toast.makeText(WorkoutCreatorActivity.this, "Workout Saved", Toast.LENGTH_SHORT);
         toast.show();
+        finish();
     }
 
     private static class getScheduleAsyncTask extends AsyncTask<String, Void, Schedule> {
