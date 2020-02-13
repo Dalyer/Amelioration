@@ -1,5 +1,6 @@
 package com.example.david.amelioration;
 
+import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -25,8 +26,9 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
     private Parcelable mExerciseListState;
     private EditText mWorkoutName;
     private Day mDayState;
-    private String dayName;
+    private String mDayName;
     private ScheduleRepository mScheduleRepository;
+    private String mScheduleName; //TODO get this
 
 
     @Override
@@ -40,7 +42,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         // set up database repository
         mScheduleRepository = new ScheduleRepository(getApplication());
         // get day name for current workout
-        dayName = getIntent().getStringExtra("name");
+        mDayName = getIntent().getStringExtra("name");
 
         // Get day name
         mWorkoutName = findViewById(R.id.workout_name);
@@ -77,7 +79,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         mExerciseList = new LinkedList<>();
         Exercise x = new Exercise("New Exercise", "empty", 0);
         mExerciseList.addLast(x);
-        mDayState = new Day(dayName, mExerciseList);
+        mDayState = new Day(mDayName, mExerciseList);
 
 
         // Get a handle to the RecyclerView
@@ -115,33 +117,52 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         helper.attachToRecyclerView(mRecyclerView);
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mExerciseListState = mLayoutManager.onSaveInstanceState();
-        outState.putParcelable("test", mExerciseListState);
-
-    }
-    @Override
-    protected void onRestoreInstanceState(Bundle outState) {
-        super.onRestoreInstanceState(outState);
-
-        // Retrieve list state and list/item positions
-        if (outState != null)
-            mExerciseListState = outState.getParcelable("test");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (mExerciseListState != null) {
-            mLayoutManager.onRestoreInstanceState(mExerciseListState);
-        }
-    }
 
     public void saveWorkout(View view) {
+        new getScheduleAsyncTask(mScheduleRepository, mScheduleName, mDayName, mExerciseList, mWorkoutName.getText().toString()).execute();
+        Toast toast = Toast.makeText(WorkoutCreatorActivity.this, "Workout Saved", Toast.LENGTH_SHORT);
+        toast.show();
         // TODO save workout data here
         // TODO need to go into the existing database table find the matching day then replace the day with the updated copy
+    }
+
+    private static class getScheduleAsyncTask extends AsyncTask<String, Void, Schedule> {
+
+        private ScheduleRepository mRepository;
+        private String mScheduleName;
+        private Schedule mSchedule;
+        private String mDayName;
+        private LinkedList<Exercise> mUpdatedExercises;
+        private String mWorkoutName;
+
+        getScheduleAsyncTask(ScheduleRepository repo, String scheduleName, String dayName, LinkedList<Exercise> exercises, String name) {
+            mRepository = repo;
+            mScheduleName = scheduleName;
+            mDayName = dayName;
+            mUpdatedExercises = exercises;
+            mWorkoutName = name;
+        }
+
+        @Override
+        protected Schedule doInBackground(String... strings) {
+            mSchedule = mRepository.getSchedule(mScheduleName);
+            return mSchedule;
+        }
+
+        @Override
+        protected void onPostExecute(Schedule schedule) {
+            super.onPostExecute(schedule);
+            // find Day/workout to replace
+            LinkedList<Day> days = mSchedule.getWorkouts();
+            for(int i=0; i < days.size(); i++) {
+                Day currDay = days.get(i);
+                if(currDay.getName().equals(mDayName)) {
+                    //Update exercise linked list and name
+                    currDay.updateExercises(mUpdatedExercises);
+                    currDay.updateName(mWorkoutName);
+                }
+            }
+            // TODO move workout saved toast here
+        }
     }
 }
