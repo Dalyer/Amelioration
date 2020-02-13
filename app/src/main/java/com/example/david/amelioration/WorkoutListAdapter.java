@@ -17,11 +17,15 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
     private final LinkedList<Exercise> mExerciseList;
     private LayoutInflater mInflater;
     private Context mContext;
+    private String mWorkoutName;
+    private String mScheduleName;
 
-    WorkoutListAdapter(Context context, LinkedList<Exercise> exerciseList) {
+    WorkoutListAdapter(Context context, LinkedList<Exercise> exerciseList, String workoutName, String scheduleName) {
         mInflater = LayoutInflater.from(context);
         this.mExerciseList = exerciseList;
         this.mContext = context;
+        mWorkoutName = workoutName;
+        mScheduleName = scheduleName;
     }
 
     @NonNull
@@ -40,6 +44,10 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
     @Override
     public int getItemCount() {
         return mExerciseList.size();
+    }
+
+    void setWorkoutName(String name) {
+        mWorkoutName = name;
     }
 
     class ExerciseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -65,9 +73,11 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
             // Get current exercise selected and start the ExerciseCreatorActivity
             Exercise currentExercise = mExerciseList.get(getAdapterPosition());
             Intent intent = new Intent(mContext, ExerciseCreatorActivity.class);
-            intent.putExtra("name", currentExercise.getName());
+            intent.putExtra("exercise_name", currentExercise.getName());
             intent.putExtra("description", currentExercise.getDescription());
             intent.putExtra("rest_time", currentExercise.getRestTime());
+            intent.putExtra("workout_name", mWorkoutName);
+            intent.putExtra("schedule_name", mScheduleName);
             mContext.startActivity(intent);
         }
     }

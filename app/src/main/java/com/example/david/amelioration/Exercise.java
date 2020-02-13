@@ -29,4 +29,17 @@ class Exercise {
     public int getRestTime() {
         return restTimeMs;
     }
+
+    // setters
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public void updateDescription(String description) {
+        this.description = description;
+    }
+
+    public void updateRestTimeMs(int restTime) {
+        this.restTimeMs = restTime;
+    }
 }

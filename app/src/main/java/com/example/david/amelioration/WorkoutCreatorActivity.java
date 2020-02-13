@@ -55,6 +55,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(WorkoutCreatorActivity.this, "hello", Toast.LENGTH_LONG);
                     toast.show();   // remove later
                     mWorkoutName.clearFocus();
+                    mAdapter.setWorkoutName(mWorkoutName.getText().toString());
                     return false;
                     // TODO save the schedule name stuff here
                 }
@@ -86,7 +87,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         // Get a handle to the RecyclerView
         mRecyclerView = findViewById(R.id.recycler_view_workout_creator);
         // create an adapter and supply the data to be displayed
-        mAdapter = new WorkoutListAdapter(this, mExerciseList);
+        mAdapter = new WorkoutListAdapter(this, mExerciseList, mWorkoutName.getText().toString(), mScheduleName);
         // connect the adapter with the RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
         // give the RecycleView a default layout manager
@@ -157,8 +158,14 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
                 Day currDay = days.get(i);
                 if(currDay.getName().equals(mDayName)) {
                     //Update exercise linked list and name
+                    days.remove(i);
                     currDay.updateExercises(mUpdatedExercises);
                     currDay.updateName(mWorkoutName);
+                    //update schedule
+                    days.add(i, currDay);
+                    mSchedule.updateWorkouts(days);
+                    // update database
+                    mRepository.insert(mSchedule);
                 }
             }
             // TODO move workout saved toast here
