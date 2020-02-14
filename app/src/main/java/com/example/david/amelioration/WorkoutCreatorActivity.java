@@ -1,7 +1,10 @@
 package com.example.david.amelioration;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,11 +17,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class WorkoutCreatorActivity extends AppCompatActivity {
+public class WorkoutCreatorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Schedule> {
     private LinkedList<Exercise> mExerciseList;
     private RecyclerView mRecyclerView;
     private WorkoutListAdapter mAdapter;
@@ -28,14 +34,15 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
     private Day mDayState;
     private String mDayName;
     private ScheduleRepository mScheduleRepository;
-    private String mScheduleName; //TODO get this
+    private String mScheduleName;
+    private Schedule mSchedule;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_creator);
-    // TODO add saveInstanceState information
+        // TODO add saveInstanceState information
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -74,7 +81,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
                 mRecyclerView.getAdapter().notifyItemInserted(exerciseListSize);
                 mRecyclerView.smoothScrollToPosition(exerciseListSize);
             }
-            });
+        });
 
 
         // Add initial New Exercise Button
@@ -95,9 +102,13 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
 
         mLayoutManager = mRecyclerView.getLayoutManager();
 
+        if (getSupportLoaderManager().getLoader(0) != null) {
+            getSupportLoaderManager().initLoader(0, null, this);
+        }
+
         // enable swiping to remove and dragging
         ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
-                ItemTouchHelper.DOWN | ItemTouchHelper.UP, ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+                ItemTouchHelper.DOWN | ItemTouchHelper.UP, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView,
                                   RecyclerView.ViewHolder viewHolder,
@@ -105,7 +116,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
                 int from = viewHolder.getAdapterPosition();
                 int to = target.getAdapterPosition();
                 Collections.swap(mExerciseList, from, to);
-                mAdapter.notifyItemMoved(from,to);
+                mAdapter.notifyItemMoved(from, to);
                 return true;
             }
 
@@ -122,7 +133,24 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //TODO update layout from database
+        // TODO update layout from database
+        //TODO have to use a view model
+        // get updated schedule
+        // use an asyncTaskLoader
+        Bundle savedState = new Bundle();
+        savedState.putString("dayName", mWorkoutName.getText().toString());
+        savedState.putString("scheduleName", mScheduleName);
+        getSupportLoaderManager().restartLoader(0, savedState, this);
+//        mSchedule = mScheduleRepository.getSchedule(mScheduleName);
+//        LinkedList<Day> dayList = mSchedule.getWorkouts();
+//        for (int i = 0; i < dayList.size(); i++) {
+//            if(dayList.get(i).getName().equals(mDayName)) {
+//                mExerciseList = dayList.get(i).getExercises();
+//            }
+//        }
+        // update recyclerview
+//        mAdapter.notifyDataSetChanged();
+
     }
 
     public void saveWorkout(View view) {
@@ -130,6 +158,34 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(WorkoutCreatorActivity.this, "Workout Saved", Toast.LENGTH_SHORT);
         toast.show();
         finish();
+    }
+
+    @NonNull
+    @Override
+    public Loader<Schedule> onCreateLoader(int i, @Nullable Bundle bundle) {
+        String scheduleName = "";
+        String dayName = "";
+        if (bundle != null) {
+            scheduleName = bundle.getString("scheduleName");
+            dayName = bundle.getString("dayName");
+        }
+        return new UILoader(this, mScheduleRepository, dayName, scheduleName);
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<Schedule> loader, Schedule schedule) {
+        LinkedList<Day> dayList = schedule.getWorkouts();
+        for (int i = 0; i < dayList.size(); i++) {
+            if (dayList.get(i).getName().equals(mWorkoutName.getText().toString())) {
+                mExerciseList = dayList.get(i).getExercises();
+            }
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<Schedule> loader) {
+
     }
 
     private static class getScheduleAsyncTask extends AsyncTask<String, Void, Schedule> {
@@ -149,6 +205,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
             mWorkoutName = name;
         }
 
+
         @Override
         protected Schedule doInBackground(String... strings) {
             mSchedule = mRepository.getSchedule(mScheduleName);
@@ -158,11 +215,12 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Schedule schedule) {
             super.onPostExecute(schedule);
+
             // find Day/workout to replace
             LinkedList<Day> days = mSchedule.getWorkouts();
-            for(int i=0; i < days.size(); i++) {
+            for (int i = 0; i < days.size(); i++) {
                 Day currDay = days.get(i);
-                if(currDay.getName().equals(mDayName)) {
+                if (currDay.getName().equals(mDayName)) {
                     //Update exercise linked list and name
                     days.remove(i);
                     currDay.updateExercises(mUpdatedExercises);
@@ -175,6 +233,8 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
                 }
             }
             // TODO move workout saved toast here
+
+
         }
     }
 }
