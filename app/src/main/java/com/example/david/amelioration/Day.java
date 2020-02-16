@@ -1,11 +1,16 @@
 package com.example.david.amelioration;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.util.LinkedList;
 
+
+@Entity(tableName= "day_table")
 public class Day {
 
+    @PrimaryKey
     private String name;
-
     private LinkedList<Exercise> exercises;
 
 
