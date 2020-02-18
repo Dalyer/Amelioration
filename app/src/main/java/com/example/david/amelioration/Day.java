@@ -10,6 +10,7 @@ import java.util.LinkedList;
 public class Day {
 
     @PrimaryKey
+    private int Id;       // needs to be unique
     private String name;
     private LinkedList<Exercise> exercises;
 

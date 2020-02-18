@@ -13,7 +13,9 @@ import java.util.LinkedList;
 public class Schedule {
 
     @PrimaryKey
-    @NonNull
+    private int Id;     // this needs to be unique
+
+
     private String mScheduleName;
 
     @NonNull

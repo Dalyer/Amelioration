@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 class Exercise {
 
     @PrimaryKey
+    private int Id;         // needs to be unique
     private String name;
     private String description;
     private int restTimeMs;
