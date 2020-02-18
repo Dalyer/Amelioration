@@ -1,5 +1,8 @@
 package com.example.david.amelioration;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,16 +19,18 @@ import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 
 public class DayCreatorActivity extends AppCompatActivity {
     private final LinkedList<Day> mDayList = new LinkedList<>();
     private RecyclerView mRecyclerView;
     private DayListAdapter mAdapter;
-    private EditText mScheduleName;
-    private ScheduleViewModel mScheduleViewModel;
+    private EditText mScheduleEditText;
     private ScheduleRepository mScheduleRepository;
     private Schedule mScheduleState;
+    private DayViewModel mDayViewModel;
+    private int mScheduleId;
 
 
 
@@ -33,21 +38,20 @@ public class DayCreatorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_day_creator);
-        // TODO add saveInstanceState information
         Toolbar toolbar = findViewById(R.id.toolbar_day_creator);
         setSupportActionBar(toolbar);
 
         // Get view elements
-        mScheduleName = findViewById(R.id.schedule_name);
+        mScheduleEditText = findViewById(R.id.schedule_name);
         // Listen for entering a new name for scheduler
-        if (mScheduleName != null) {
-            mScheduleName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        if (mScheduleEditText != null) {
+            mScheduleEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     Toast toast = Toast.makeText(DayCreatorActivity.this, "hello", Toast.LENGTH_LONG);
                     toast.show();   // remove later
-                    mScheduleName.clearFocus();
-                    mAdapter.setScheduleName(mScheduleName.getText().toString());
+                    mScheduleEditText.clearFocus();
+                    mAdapter.setScheduleName(mScheduleEditText.getText().toString());
                     return false;
                 }
             });
@@ -64,12 +68,18 @@ public class DayCreatorActivity extends AppCompatActivity {
                 LinkedList<Exercise> newList = new LinkedList<>();
                 newList.addLast(temp);
                 Day newDay = new Day("New Day", newList);
+                // update viewmodel
+                mScheduleState.addWorkout(newDay);
+                mDayViewModel.insert(mScheduleState);
+                //Change
                 mDayList.addLast(newDay);
                 mRecyclerView.getAdapter().notifyItemInserted(dayListSize);
                 mRecyclerView.smoothScrollToPosition(dayListSize);
                 // Save schedule state here?
             }
         });
+        // set a new unique schedule id  TODO
+        mScheduleId = 1;
 
         // Create a new database entry
         // Make empty exercise object
@@ -80,9 +90,10 @@ public class DayCreatorActivity extends AppCompatActivity {
         Day dayBase = new Day("New Day", exerciseList);
         mDayList.addLast(dayBase);
         // Create Schedule
-        mScheduleState = new Schedule(mScheduleName.getText().toString(), mDayList); // continually add to this and save it on state save
+        mScheduleState = new Schedule(mScheduleId, mScheduleEditText.getText().toString(), mDayList); // continually add to this and save it on state save
         // Get schedule repository
         mScheduleRepository = new ScheduleRepository(getApplication());
+        mDayViewModel = ViewModelProviders.of(this).get(DayViewModel.class);
 
 
         // Get a handle to the RecyclerView
@@ -118,6 +129,16 @@ public class DayCreatorActivity extends AppCompatActivity {
             }
         });
         helper.attachToRecyclerView(mRecyclerView);
+
+        // Observer for list state changes
+        mDayViewModel.getAllSchedules().observe(this, new Observer<List<Schedule>>() {
+            @Override
+            public void onChanged(@Nullable final List<Schedule> schedules) {
+                //TODO search for the listof days for the schedule ID here
+                mAdapter.setDays();
+            }
+        })
+
     }
 
     @Override

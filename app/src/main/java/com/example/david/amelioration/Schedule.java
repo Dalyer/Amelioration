@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 @Entity(tableName = "schedule_table")
 public class Schedule {
@@ -15,17 +16,22 @@ public class Schedule {
     @PrimaryKey
     private int Id;     // this needs to be unique
 
-
+    @NonNull
     private String mScheduleName;
 
     @NonNull
-    private LinkedList<Day> workouts;     // TODO add a typeConverter
+    private LinkedList<Day> workouts;
 
-    public Schedule(@NonNull String scheduleName,@NonNull LinkedList<Day> workouts) {
+    public Schedule(int Id, @NonNull String scheduleName,@NonNull LinkedList<Day> workouts) {
         this.mScheduleName = scheduleName;
         this.workouts = workouts;
+        this.Id = Id;
     }
     // getters
+
+    public int getId() {
+        return Id;
+    }
 
     public String getScheduleName() {
         return mScheduleName;
@@ -37,7 +43,7 @@ public class Schedule {
 
     // setters
     public void addWorkout(Day workout) {
-        workouts.addLast(workout);
+        workouts.add(workout);
     }
 
     public void removeWorkout(int workout){
@@ -47,4 +53,5 @@ public class Schedule {
     public void updateWorkouts(LinkedList<Day> updatedWorkouts) {
         workouts = updatedWorkouts;
     }
+
 }

@@ -19,6 +19,7 @@ public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.DayViewH
     private LayoutInflater mInflater;
     private Context mContext;
     private String mScheduleName;
+    private List<Schedule> mSchedules;
 
     DayListAdapter(Context context, LinkedList<Day> dayList, String scheduleName) {
         mInflater = LayoutInflater.from(context);
