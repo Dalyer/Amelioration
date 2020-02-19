@@ -135,9 +135,15 @@ public class DayCreatorActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable final List<Schedule> schedules) {
                 //TODO search for the listof days for the schedule ID here
+                LinkedList<Day> days = mScheduleState.getWorkouts();
+                for (int i =0; i < days.size(); i++) {
+//                    currDay = days.get(i);
+//                    if (currDay == m)
+                }
+                // Find workout
                 mAdapter.setDays();
             }
-        })
+        });
 
     }
 
