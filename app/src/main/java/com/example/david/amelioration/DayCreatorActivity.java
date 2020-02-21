@@ -73,8 +73,8 @@ public class DayCreatorActivity extends AppCompatActivity {
                 mDayViewModel.insert(mScheduleState);
                 //Change
                 mDayList.addLast(newDay);
-                mRecyclerView.getAdapter().notifyItemInserted(dayListSize);
-                mRecyclerView.smoothScrollToPosition(dayListSize);
+//                mRecyclerView.getAdapter().notifyItemInserted(dayListSize); // redundant
+//                mRecyclerView.smoothScrollToPosition(dayListSize);   // redundant
                 // Save schedule state here?
             }
         });
@@ -133,15 +133,11 @@ public class DayCreatorActivity extends AppCompatActivity {
         // Observer for list state changes
         mDayViewModel.getAllSchedules().observe(this, new Observer<List<Schedule>>() {
             @Override
-            public void onChanged(@Nullable final List<Schedule> schedules) {
-                //TODO search for the listof days for the schedule ID here
+            public void onChanged(@Nullable List<Schedule> schedules) {
+                //TODO search for the list of days for the schedule ID here
                 LinkedList<Day> days = mScheduleState.getWorkouts();
-                for (int i =0; i < days.size(); i++) {
-//                    currDay = days.get(i);
-//                    if (currDay == m)
-                }
                 // Find workout
-                mAdapter.setDays();
+                mAdapter.setDays(days);
             }
         });
 
