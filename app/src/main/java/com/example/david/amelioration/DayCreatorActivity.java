@@ -41,9 +41,9 @@ public class DayCreatorActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_day_creator);
         setSupportActionBar(toolbar);
 
-        // Get view elements
+        // Get Schedule naming field
         mScheduleEditText = findViewById(R.id.schedule_name);
-        // Listen for entering a new name for scheduler
+        // Listen for entering a new name for schedule
         if (mScheduleEditText != null) {
             mScheduleEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
@@ -51,7 +51,7 @@ public class DayCreatorActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(DayCreatorActivity.this, "hello", Toast.LENGTH_LONG);
                     toast.show();   // remove later
                     mScheduleEditText.clearFocus();
-                    mAdapter.setScheduleName(mScheduleEditText.getText().toString());
+                    mAdapter.setScheduleName(mScheduleEditText.getText().toString());     // TODO Remove and just store in a member variable???
                     return false;
                 }
             });
