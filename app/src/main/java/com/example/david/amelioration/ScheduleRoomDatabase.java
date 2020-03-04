@@ -12,11 +12,12 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-@Database(entities = {Schedule.class}, version=1, exportSchema = false)
-@TypeConverters({Converters.class})
+@Database(entities = {Schedule.class, Day.class, Exercise.class}, version=1, exportSchema = false)
 public abstract class ScheduleRoomDatabase extends RoomDatabase {
     private static ScheduleRoomDatabase INSTANCE;
     public abstract ScheduleDao scheduleDao();
+    public abstract DayDao dayDao();
+    public abstract ExerciseDao exerciseDao();
 
     static ScheduleRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
