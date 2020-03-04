@@ -4,20 +4,31 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class ScheduleRepository {
     // Member variables
+    // Schedule
     private ScheduleDao mScheduleDao;
     private LiveData<List<Schedule>> mAllSchedules;
-    private Schedule mSchedule;
+    // Day
+    private DayDao mDayDao;
+    private LiveData<List<Day>> mAllMatchingDays;
+    // Exercise
+    private ExerciseDao mExerciseDao;
+    private LiveData<List<Exercise>> mAllMatchingExercises;
 
-    public ScheduleRepository(Application application) {
+    public ScheduleRepository(Application application, int scheduleId, int dayId, int exerciseId) {
         ScheduleRoomDatabase db = ScheduleRoomDatabase.getDatabase(application);
         mScheduleDao = db.scheduleDao();
         mAllSchedules = mScheduleDao.getAllSchedules();
+        mDayDao = db.dayDao();
+        mAllMatchingDays = mDayDao.getMatchingDays(dayId);
+        mExerciseDao = db.exerciseDao();
+        mAllMatchingExercises = mExerciseDao.getMatchingExercises(exerciseId);
     }
+
+    // Schedule Based methods
 
     LiveData<List<Schedule>> getAllSchedules() {
         return mAllSchedules;
@@ -31,10 +42,15 @@ public class ScheduleRepository {
         new deleteAllAsyncTask(mScheduleDao).execute();
     }
 
-    // Method has to be ran in a Async Task to avoid stalling the UI thread
-    public Schedule getSchedule(String scheduleName) {
-        mSchedule = mScheduleDao.getSchedule(scheduleName);
-        return mSchedule;
+    // TODO add a wrapper for getting a specific schedule
+
+    // Day based methods
+    LiveData<List<Day>> getmAllMatchingDays() {
+        return mAllMatchingDays;
+    }
+    // Exercise based methods
+    LiveData<List<Exercise>> getmAllMatchingExercises() {
+        return mAllMatchingExercises;
     }
 
     private static class deleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
