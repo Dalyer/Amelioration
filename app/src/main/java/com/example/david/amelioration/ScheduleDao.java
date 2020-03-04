@@ -22,6 +22,7 @@ public interface ScheduleDao {
     @Query("SELECT * from schedule_table ORDER BY mScheduleName ASC")
     LiveData<List<Schedule>> getAllSchedules();
 
-    @Query("SELECT * from schedule_table WHERE mScheduleName IS (:scheduleName)")
-    Schedule getSchedule(String scheduleName);
+    @Query("SELECT * from schedule_table WHERE scheduleId IS (:scheduleId)")
+    Schedule getSchedule(int scheduleId);
+
 }
