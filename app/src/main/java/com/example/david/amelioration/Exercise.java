@@ -13,9 +13,9 @@ class Exercise {
     private int restTimeMs;
     private int order;
 
-    Exercise(int id, String name, String description, int restTimeMs, int order) {
-        this.exerciseId = id;
-        this.exerciseName = name;
+    Exercise(int exerciseId, String exerciseName, String description, int restTimeMs, int order) {
+        this.exerciseId = exerciseId;
+        this.exerciseName = exerciseName;
         this.description = description;
         this.restTimeMs = restTimeMs;
         this.order = order;

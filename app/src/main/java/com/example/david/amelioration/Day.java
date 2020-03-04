@@ -14,10 +14,10 @@ public class Day {
     private int exercisesId;
 
 
-    Day(int id, String name, int exercises, int order) {
-        this.dayId = id;
-        this.dayName = name;
-        this.exercisesId = exercises;
+    Day(int dayId, String dayName, int exercisesId, int order) {
+        this.dayId = dayId;
+        this.dayName = dayName;
+        this.exercisesId = exercisesId;
         this.order = order;
 
     }

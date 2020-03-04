@@ -5,32 +5,30 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-import java.util.LinkedList;
-
 @Entity(tableName = "schedule_table")
 public class Schedule {
 
     @PrimaryKey
-    private int ScheduleId;     // this needs to be unique
-
+    private int scheduleId;     // this needs to be unique
     @NonNull
-    private String mScheduleName;
-
+    private String scheduleName;
     private int daysId;         // this needs to be unique
 
-    public Schedule(int Id, @NonNull String scheduleName, int workouts) {
-        this.mScheduleName = scheduleName;
-        this.daysId = workouts;
-        this.ScheduleId = Id;
+
+    public Schedule(int scheduleId, @NonNull String scheduleName, int daysId) {
+        this.scheduleName = scheduleName;
+        this.daysId = daysId;
+        this.scheduleId = scheduleId;
     }
+
     // getters
-
     public int getScheduleId() {
-        return ScheduleId;
+        return scheduleId;
     }
 
+    @NonNull
     public String getScheduleName() {
-        return mScheduleName;
+        return scheduleName;
     }
 
     public int getDaysId() {
