@@ -3,41 +3,42 @@ package com.example.david.amelioration;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-import java.util.LinkedList;
-
 
 @Entity(tableName= "day_table")
 public class Day {
 
     @PrimaryKey
-    private int Id;       // needs to be unique
-    private String name;
-    private LinkedList<Exercise> exercises;
+    private int dayId;       // needs to be unique
+    private String dayName;
+    private int order;
+    private int exercisesId;
 
 
-    Day(String name, LinkedList<Exercise> exercises) {
-        this.name = name;
-        this.exercises = exercises;
+    Day(int id, String name, int exercises, int order) {
+        this.dayId = id;
+        this.dayName = name;
+        this.exercisesId = exercises;
+        this.order = order;
+
     }
 
     // getters
-    public String getName(){
-        return name;
+    public String getDayName(){
+        return dayName;
     }
 
+    public int getExercisesId() {
+        return exercisesId;
+    }
 
-    public LinkedList<Exercise> getExercises() {
-        return exercises;
+    public int getDayId() {
+        return dayId;
+    }
+
+    public int getOrder() {
+        return order;
     }
 
     // setters
 
-    public void updateExercises(LinkedList<Exercise> updatedExercises) {
-        exercises = updatedExercises;
-    }
-
-
-    public void updateName(String workoutName) {
-        name = workoutName;
-    }
 }
