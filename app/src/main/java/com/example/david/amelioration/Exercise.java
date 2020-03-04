@@ -34,7 +34,7 @@ class Exercise {
         return description;
     }
 
-    public int getRestTime() {
+    public int getRestTimeMs() {
         return restTimeMs;
     }
 
