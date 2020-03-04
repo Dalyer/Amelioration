@@ -35,7 +35,7 @@ public class ScheduleRepository {
     }
 
     public void insert(Schedule schedule) {
-        new insertAsyncTask(mScheduleDao).execute(schedule);
+        new insertScheduleAsyncTask(mScheduleDao).execute(schedule);
     }
 
     public void deleteAll() {
@@ -48,9 +48,18 @@ public class ScheduleRepository {
     LiveData<List<Day>> getmAllMatchingDays() {
         return mAllMatchingDays;
     }
+
+    public void insert(Day day) {
+        new insertDayAsyncTask(mDayDao).execute(day);
+    }
+
     // Exercise based methods
     LiveData<List<Exercise>> getmAllMatchingExercises() {
         return mAllMatchingExercises;
+    }
+
+    public void insert(Exercise exercise) {
+        new insertExerciseAsyncTask(mExerciseDao).execute(exercise);
     }
 
     private static class deleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -67,16 +76,46 @@ public class ScheduleRepository {
         }
     }
 
-    private static class insertAsyncTask extends AsyncTask<Schedule, Void, Void> {
+    private static class insertScheduleAsyncTask extends AsyncTask<Schedule, Void, Void> {
 
         private ScheduleDao mAsyncTaskDao;
 
-        insertAsyncTask(ScheduleDao dao) {
+        insertScheduleAsyncTask(ScheduleDao dao) {
             mAsyncTaskDao = dao;
         }
 
         @Override
         protected Void doInBackground(final Schedule... params) {
+            mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    private static class insertDayAsyncTask extends AsyncTask<Day, Void, Void> {
+
+        private DayDao mAsyncTaskDao;
+
+        insertDayAsyncTask(DayDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Day... params) {
+            mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    private static class insertExerciseAsyncTask extends AsyncTask<Exercise, Void, Void> {
+
+        private ExerciseDao mAsyncTaskDao;
+
+        insertExerciseAsyncTask(ExerciseDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Exercise... params) {
             mAsyncTaskDao.insert(params[0]);
             return null;
         }
