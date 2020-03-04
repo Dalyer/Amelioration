@@ -21,7 +21,7 @@ public interface ExerciseDao {
     LiveData<List<Exercise>> getAllExercises();
 
     @Query("SELECT * from exercise_table WHERE exerciseId IS (:exerciseId)")
-    Schedule getExercise(int exerciseId);
+    LiveData<List<Exercise>> getMatchingExercises(int exerciseId);
 
 }
 

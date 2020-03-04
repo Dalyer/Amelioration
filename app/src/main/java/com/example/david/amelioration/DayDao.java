@@ -18,9 +18,9 @@ public interface DayDao {
     void deleteAll();
 
     @Query("SELECT * from day_table ORDER BY dayName ASC")
-    LiveData<List<Day>> getAllSchedules();
+    LiveData<List<Day>> getAllDays();
 
-    @Query("SELECT * from day_table WHERE dayName IS (:dayId)")
-    Schedule getSchedule(int dayId);
+    @Query("SELECT * from day_table WHERE dayId IS (:dayId)")
+    LiveData<List<Day>> getMatchingDays(int dayId);
 
 }
