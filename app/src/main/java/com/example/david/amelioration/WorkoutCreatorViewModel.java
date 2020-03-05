@@ -11,6 +11,7 @@ public class WorkoutCreatorViewModel extends AndroidViewModel {
     private ScheduleRepository mRepo;
     // Schedule
     private LiveData<List<Schedule>> mAllSchedules;
+    private LiveData<Schedule> mCurrentSchedule;
     // Day
     private LiveData<List<Day>> mAllMatchingDays;
     // Exercise
@@ -25,8 +26,12 @@ public class WorkoutCreatorViewModel extends AndroidViewModel {
         mAllMatchingExercises = mRepo.getmAllMatchingExercises();
     }
 
-    LiveData<List<Schedule>> getAllSchedules () {
+    LiveData<List<Schedule>> getAllSchedules () { //TODO what
         return mAllSchedules;
+    }
+
+    LiveData<Schedule> getCurrentSchedule() {
+        return mCurrentSchedule;
     }
 
     LiveData<List<Day>> getmAllMatchingDays() {

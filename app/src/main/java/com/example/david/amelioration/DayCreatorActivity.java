@@ -23,14 +23,14 @@ import java.util.List;
 
 
 public class DayCreatorActivity extends AppCompatActivity {
-    private final LinkedList<Day> mDayList = new LinkedList<>();
     private RecyclerView mRecyclerView;
     private DayListAdapter mAdapter;
     private EditText mScheduleEditText;
     private ScheduleRepository mScheduleRepository;
-    private Schedule mScheduleState;
-    private DayViewModel mDayViewModel;
+    private WorkoutCreatorViewModel mWorkoutCreatorViewModel;
     private int mScheduleId;
+    private int mDayId;
+    private int mExerciseId;
 
 
 
@@ -62,44 +62,21 @@ public class DayCreatorActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int dayListSize = mDayList.size();
-                // add an item to this list
-                Exercise temp = new Exercise("New Exercise", "empty", 0); // TODO all names need to be unique or an id should be created as well
-                LinkedList<Exercise> newList = new LinkedList<>();
-                newList.addLast(temp);
-                Day newDay = new Day("New Day", newList);
-                // update viewmodel
-                mScheduleState.addWorkout(newDay);
-                mDayViewModel.insert(mScheduleState);
-                //Change
-                mDayList.addLast(newDay);
-//                mRecyclerView.getAdapter().notifyItemInserted(dayListSize); // redundant
-//                mRecyclerView.smoothScrollToPosition(dayListSize);   // redundant
-                // Save schedule state here?
+                // TODO implement
             }
         });
-        // set a new unique schedule id  TODO
-        mScheduleId = 1;
 
-        // Create a new database entry
-        // Make empty exercise object
-        Exercise exerciseBase = new Exercise("New Exercise", "empty", 0);
-        LinkedList<Exercise> exerciseList = new LinkedList<>();
-        exerciseList.addLast(exerciseBase);
-        // create base day object
-        Day dayBase = new Day("New Day", exerciseList);
-        mDayList.addLast(dayBase);
-        // Create Schedule
-        mScheduleState = new Schedule(mScheduleId, mScheduleEditText.getText().toString(), mDayList); // continually add to this and save it on state save
         // Get schedule repository
-        mScheduleRepository = new ScheduleRepository(getApplication());
-        mDayViewModel = ViewModelProviders.of(this).get(DayViewModel.class);
+        mScheduleRepository = new ScheduleRepository(getApplication(), mScheduleId, mDayId, mExerciseId);
+        mWorkoutCreatorViewModel = ViewModelProviders.of(this).get(WorkoutCreatorViewModel.class);
 
+        // initialize a schedule object and a day table for the view model
+        initializeData();
 
         // Get a handle to the RecyclerView
         mRecyclerView = findViewById(R.id.recycler_view_day_creator);
         // create an adapter and supply the data to be displayed
-        mAdapter = new DayListAdapter(this, mDayList, mScheduleState.getScheduleName());
+        mAdapter = new DayListAdapter(this);
         // connect the adapter with the RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
         // give the RecycleView a default layout manager
@@ -123,19 +100,17 @@ public class DayCreatorActivity extends AppCompatActivity {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder,
                                  int direction) {
-                mDayList.remove(viewHolder.getAdapterPosition());
+                mDayList.remove(viewHolder.getAdapterPosition()); //TODO remove the item from the view model and database
                 mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                 // save schedule state here?
             }
         });
         helper.attachToRecyclerView(mRecyclerView);
 
-        // Observer for list state changes
-        mDayViewModel.getAllSchedules().observe(this, new Observer<List<Schedule>>() {
+        // Observer for list of day changes
+        mWorkoutCreatorViewModel.getmAllMatchingDays().observe(this, new Observer<List<Day>>() {
             @Override
-            public void onChanged(@Nullable List<Schedule> schedules) {
-                //TODO search for the list of days for the schedule ID here
-                LinkedList<Day> days = mScheduleState.getWorkouts();
+            public void onChanged(@Nullable List<Day> days) {
                 // Find workout
                 mAdapter.setDays(days);
             }
@@ -152,15 +127,24 @@ public class DayCreatorActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        mScheduleState.updateWorkouts(mDayList);
+       // mScheduleState.updateWorkouts(mDayList); todo un-break
     }
 
-    public void saveSchedule(View view) {
-        mScheduleState.updateWorkouts(mDayList);
-        mScheduleRepository.insert(mScheduleState);
-    }
 
-    public String getScheduleName() {
-        return mScheduleState.getScheduleName();
+    public void initializeData() {
+        // TODO create a unique scheduleID and mDayId
+        mScheduleId = 1;
+        mDayId = 1;
+        mExerciseId = 2;
+        // Create the base schedule
+        Schedule scheduleBase = new Schedule(mScheduleId, mScheduleEditText.getText().toString(), mDayId);
+        mWorkoutCreatorViewModel.insert(scheduleBase);
+        // Create the base day object
+        Day dayBase = new Day(mDayId,"New Day", mExerciseId, 0);
+        mDayList.add(dayBase);
+        mWorkoutCreatorViewModel.insert(dayBase);
+        // Create the base exercise object
+        Exercise exerciseBase = new Exercise(mExerciseId, "New Exercise", "", 0, 0);
+        mWorkoutCreatorViewModel.insert(exerciseBase);
     }
 }

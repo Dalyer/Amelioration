@@ -15,17 +15,15 @@ import java.util.List;
 public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.DayViewHolder>    {
 
     // Member variables
-    private LinkedList<Day> mDayList; //cached copy of days
+    private List<Day> mDayList; //cached copy of days
     private LayoutInflater mInflater;
     private Context mContext;
     private String mScheduleName;
     private List<Schedule> mSchedules;
 
-    DayListAdapter(Context context, LinkedList<Day> dayList, String scheduleName) {
+    DayListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
-        this.mDayList = dayList;
         this.mContext = context;
-        this.mScheduleName = scheduleName;
     }
 
     @NonNull
@@ -38,7 +36,7 @@ public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.DayViewH
     @Override
     public void onBindViewHolder(@NonNull DayListAdapter.DayViewHolder dayViewHolder, int position) {
         Day currentDay = mDayList.get(position);
-        dayViewHolder.dayName.setText(currentDay.getName()); // TODO fix all placeholders
+        dayViewHolder.dayName.setText(currentDay.getDayName()); // TODO fix all placeholders
     }
 
     @Override
@@ -46,7 +44,7 @@ public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.DayViewH
         return mDayList.size();
     }
 
-    void setDays(LinkedList<Day> days) {
+    void setDays(List<Day> days) {
         mDayList = days;
         notifyDataSetChanged();
     }
@@ -78,7 +76,7 @@ public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.DayViewH
             // Get current exercise selected and start the ExerciseCreatorActivity
             Day currentDay = mDayList.get(getAdapterPosition());
             Intent intent = new Intent(mContext, WorkoutCreatorActivity.class);
-            intent.putExtra("name", currentDay.getName());
+            intent.putExtra("name", currentDay.getDayName());
             intent.putExtra("scheduleName", mScheduleName);
             mContext.startActivity(intent);
         }
