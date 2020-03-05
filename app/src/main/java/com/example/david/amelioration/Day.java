@@ -9,12 +9,14 @@ public class Day {
 
     @PrimaryKey
     private int dayId;       // needs to be unique
+    private int scheduleId;  // the id of the schedule that created it
     private String dayName;
     private int order;
     private int exercisesId;
 
 
-    Day(int dayId, String dayName, int exercisesId, int order) {
+    Day(int scheduleId, int dayId, String dayName, int exercisesId, int order) {
+        this.scheduleId = scheduleId;
         this.dayId = dayId;
         this.dayName = dayName;
         this.exercisesId = exercisesId;
@@ -37,6 +39,10 @@ public class Day {
 
     public int getOrder() {
         return order;
+    }
+
+    public int getScheduleId() {
+        return scheduleId;
     }
 
     // setters

@@ -20,7 +20,6 @@ public class ExerciseCreatorActivity extends AppCompatActivity {
     private int mExerciseRestTime;
     private String mWorkoutName;
     private String mScheduleName;
-    private ScheduleRepository mRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +30,6 @@ public class ExerciseCreatorActivity extends AppCompatActivity {
         // get EditTexts
         EditText exerciseName = findViewById(R.id.name_edit_text);
         EditText exerciseDescription = findViewById(R.id.description_edit_text);
-        // Get Spinners
-
-        //set repository
-        mRepository = new ScheduleRepository(getApplication());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -42,7 +37,7 @@ public class ExerciseCreatorActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveExercise();
+                // TODO implement
             }
         });
 
@@ -63,69 +58,6 @@ public class ExerciseCreatorActivity extends AppCompatActivity {
         }
         exerciseName.setText(mExerciseName);
 
-    }
-
-    public void saveExercise() {
-        // get the schedule from the database then find the correct day then update the specific exercise from the list
-        new updateExerciseAsyncTask(mRepository, mScheduleName, mExerciseName, mWorkoutName, mExerciseDescription, mExerciseRestTime);
-        Toast toast = Toast.makeText(this, "Exercise Saved", Toast.LENGTH_SHORT);
-        toast.show();
-        finish();
-    }
-
-    private static class updateExerciseAsyncTask extends AsyncTask<String, Void, Schedule> {
-
-        private ScheduleRepository mRepository;
-        private String mScheduleName;
-        private Schedule mSchedule;
-        private String mExerciseName;
-        private String mDayName;
-
-        private String mExerciseDescription;
-        private int mExerciseRestTime;
-
-        updateExerciseAsyncTask(ScheduleRepository repo, String scheduleName, String exerciseName, String dayName, String description, int restTime) {
-            mRepository = repo;
-            mScheduleName = scheduleName;
-            mExerciseName = exerciseName;
-            mDayName = dayName;
-            mExerciseDescription = description;
-            mExerciseRestTime = restTime;
-        }
-
-        @Override
-        protected Schedule doInBackground(String... strings) {
-            mSchedule = mRepository.getSchedule(mScheduleName);
-            return mSchedule;
-        }
-
-        @Override
-        protected void onPostExecute(Schedule schedule) {
-            super.onPostExecute(schedule);
-            // find Day/workout to replace
-            LinkedList<Day> days = mSchedule.getWorkouts();
-            for (int i = 0; i < days.size(); i++) {
-                Day currDay = days.get(i);
-                if (currDay.getName().equals(mDayName)) {
-                    //Update exercise linked list
-                    LinkedList<Exercise> currExercises = currDay.getExercises();
-                    for(int j = 0; j < currExercises.size(); j++) {
-                        Exercise currExercise = currExercises.get(j);
-                        if(currExercise.getName().equals(mExerciseName)) {
-                            currExercises.remove(j);
-                            currExercise.updateDescription(mExerciseDescription);
-                            currExercise.updateName(mExerciseName);
-                            currExercise.updateRestTimeMs(mExerciseRestTime);
-                            currExercises.add(j, currExercise);
-                            currDay.updateExercises(currExercises);
-                            mSchedule.updateWorkouts(days);
-                            mRepository.insert(mSchedule);
-                        }
-                    }
-                }
-            }
-            // TODO move workout saved toast here
-        }
     }
 
 }

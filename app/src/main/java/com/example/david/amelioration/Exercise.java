@@ -8,12 +8,14 @@ class Exercise {
 
     @PrimaryKey
     private int exerciseId;         // needs to be unique
+    private int dayId;              // the id of the day it belongs too or the day that created it
     private String exerciseName;
     private String description;
     private int restTimeMs;
     private int order;
 
-    Exercise(int exerciseId, String exerciseName, String description, int restTimeMs, int order) {
+    Exercise(int dayId, int exerciseId, String exerciseName, String description, int restTimeMs, int order) {
+        this.dayId = dayId;
         this.exerciseId = exerciseId;
         this.exerciseName = exerciseName;
         this.description = description;
@@ -40,6 +42,10 @@ class Exercise {
 
     public int getOrder() {
         return order;
+    }
+
+    public int getDayId() {
+        return dayId;
     }
 
     // setters

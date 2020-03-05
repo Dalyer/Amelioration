@@ -16,9 +16,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -64,13 +61,19 @@ public class DayCreatorActivity extends AppCompatActivity {
                 // Create new day
                 // increment exerciseId for the new day
                 mExerciseId++;
-                Day newDay = new Day(mDayId,"New Day", mExerciseId, 0);
+                mDayId++;
+                Day newDay = new Day(mScheduleId, mDayId,"New Day", mExerciseId, 0);
                 mWorkoutCreatorViewModel.insert(newDay);
             }
         });
 
+        // TODO create a unique scheduleID and mDayId
+        mScheduleId = 1;
+        mDayId = 1;
+        mExerciseId = 2;
+
         // Set view model
-        mWorkoutCreatorViewModel = ViewModelProviders.of(this).get(WorkoutCreatorViewModel.class);
+        mWorkoutCreatorViewModel = ViewModelProviders.of(this, new WorkoutCreatorViewModelFactory(this.getApplication(), mScheduleId, mDayId, mExerciseId)).get(WorkoutCreatorViewModel.class);
 
         // initialize a schedule object and a day table for the view model
         initializeData();
@@ -134,18 +137,21 @@ public class DayCreatorActivity extends AppCompatActivity {
 
 
     public void initializeData() {
-        // TODO create a unique scheduleID and mDayId
-        mScheduleId = 1;
-        mDayId = 1;
-        mExerciseId = 2;
         // Create the base schedule
         Schedule scheduleBase = new Schedule(mScheduleId, mScheduleEditText.getText().toString(), mDayId);
         mWorkoutCreatorViewModel.insert(scheduleBase);
         // Create the base day object
-        Day dayBase = new Day(mDayId,"New Day", mExerciseId, 0);
+        Day dayBase = new Day(mScheduleId, mDayId,"New Day", mExerciseId, 0);
         mWorkoutCreatorViewModel.insert(dayBase);
         // Create the base exercise object
-        Exercise exerciseBase = new Exercise(mExerciseId, "New Exercise", "", 0, 0);
+        Exercise exerciseBase = new Exercise(mDayId, mExerciseId, "New Exercise", "", 0, 0);
         mWorkoutCreatorViewModel.insert(exerciseBase);
     }
+
+    public void saveSchedule(View view) {
+        mScheduleEditText.clearFocus();
+        // TODO set schedule name in the database
+    }
 }
+
+//TODO delete schedule if not saved

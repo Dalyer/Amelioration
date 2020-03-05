@@ -23,9 +23,9 @@ public class ScheduleRepository {
         mScheduleDao = db.scheduleDao();
         mAllSchedules = mScheduleDao.getAllSchedules();
         mDayDao = db.dayDao();
-        mAllMatchingDays = mDayDao.getMatchingDays(dayId);
+        mAllMatchingDays = mDayDao.getMatchingDays(scheduleId);
         mExerciseDao = db.exerciseDao();
-        mAllMatchingExercises = mExerciseDao.getMatchingExercises(exerciseId);
+        mAllMatchingExercises = mExerciseDao.getMatchingExercises(dayId);
     }
 
     // Schedule Based methods

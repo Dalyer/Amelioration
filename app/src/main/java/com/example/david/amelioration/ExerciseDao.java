@@ -20,8 +20,8 @@ public interface ExerciseDao {
     @Query("SELECT * from exercise_table ORDER BY exerciseName ASC")
     LiveData<List<Exercise>> getAllExercises();
 
-    @Query("SELECT * from exercise_table WHERE exerciseId IS (:exerciseId)")
-    LiveData<List<Exercise>> getMatchingExercises(int exerciseId);
+    @Query("SELECT * from exercise_table WHERE dayId IS (:dayId)")
+    LiveData<List<Exercise>> getMatchingExercises(int dayId);
 
 }
 
