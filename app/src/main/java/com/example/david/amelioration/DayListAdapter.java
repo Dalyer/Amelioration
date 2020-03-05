@@ -35,13 +35,21 @@ public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.DayViewH
 
     @Override
     public void onBindViewHolder(@NonNull DayListAdapter.DayViewHolder dayViewHolder, int position) {
-        Day currentDay = mDayList.get(position);
-        dayViewHolder.dayName.setText(currentDay.getDayName()); // TODO fix all placeholders
+        if (mDayList != null) {
+            Day currentDay = mDayList.get(position);
+            dayViewHolder.dayName.setText(currentDay.getDayName()); // TODO fix all placeholders
+        } else {
+            //covers the case of data not tbeing ready yet
+            dayViewHolder.dayName.setText("No word");
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return mDayList.size();
+        if (mDayList != null)
+            return mDayList.size();
+        else return 0;
     }
 
     void setDays(List<Day> days) {
@@ -72,7 +80,7 @@ public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.DayViewH
         }
         @Override
         public void onClick(View v) {
-            // TODO this should start the WorkoutCreatorActivity instead, needs another DayCreatorActivity before in the hierarchy
+            // TODO FIX THIS TO WORK WITH VIEW MODEL
             // Get current exercise selected and start the ExerciseCreatorActivity
             Day currentDay = mDayList.get(getAdapterPosition());
             Intent intent = new Intent(mContext, WorkoutCreatorActivity.class);

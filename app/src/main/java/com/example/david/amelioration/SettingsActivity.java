@@ -14,7 +14,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        mScheduleRepository = new ScheduleRepository(getApplication());
+        mScheduleRepository = new ScheduleRepository(getApplication(), 0 ,0, 0); // Id's don't matter because its clearing all
     }
 
     public void clearDatabase(View view) {

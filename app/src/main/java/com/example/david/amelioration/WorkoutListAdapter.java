@@ -10,22 +10,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.ExerciseViewHolder>    {
 
     // Member variables
-    private final LinkedList<Exercise> mExerciseList;
+    private List<Exercise> mExerciseList; // cached copy of exercise list
     private LayoutInflater mInflater;
     private Context mContext;
     private String mWorkoutName;
-    private String mScheduleName;
 
-    WorkoutListAdapter(Context context, LinkedList<Exercise> exerciseList, String workoutName, String scheduleName) {
+
+    WorkoutListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
-        this.mExerciseList = exerciseList;
         this.mContext = context;
-        mWorkoutName = workoutName;
-        mScheduleName = scheduleName;
     }
 
     @NonNull
@@ -38,7 +36,7 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
     @Override
     public void onBindViewHolder(@NonNull WorkoutListAdapter.ExerciseViewHolder exerciseViewHolder, int position) {
         Exercise currentExercise = mExerciseList.get(position);
-        exerciseViewHolder.exerciseName.setText(currentExercise.getName()); // TODO fix all placeholders
+        exerciseViewHolder.exerciseName.setText(currentExercise.getExerciseName()); // TODO fix all placeholders
     }
 
     @Override
@@ -73,11 +71,10 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
             // Get current exercise selected and start the ExerciseCreatorActivity
             Exercise currentExercise = mExerciseList.get(getAdapterPosition());
             Intent intent = new Intent(mContext, ExerciseCreatorActivity.class);
-            intent.putExtra("exercise_name", currentExercise.getName());
+            intent.putExtra("exercise_name", currentExercise.getExerciseName());
             intent.putExtra("description", currentExercise.getDescription());
-            intent.putExtra("rest_time", currentExercise.getRestTime());
+            intent.putExtra("rest_time", currentExercise.getRestTimeMs());
             intent.putExtra("workout_name", mWorkoutName);
-            intent.putExtra("schedule_name", mScheduleName);
             mContext.startActivity(intent);
         }
     }
