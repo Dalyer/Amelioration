@@ -26,7 +26,6 @@ public class DayCreatorActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private DayListAdapter mAdapter;
     private EditText mScheduleEditText;
-    private ScheduleRepository mScheduleRepository;
     private WorkoutCreatorViewModel mWorkoutCreatorViewModel;
     private int mScheduleId;
     private int mDayId;
@@ -51,7 +50,7 @@ public class DayCreatorActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(DayCreatorActivity.this, "hello", Toast.LENGTH_LONG);
                     toast.show();   // remove later
                     mScheduleEditText.clearFocus();
-                    mAdapter.setScheduleName(mScheduleEditText.getText().toString());     // TODO Remove and just store in a member variable???
+                    //mAdapter.setScheduleName(mScheduleEditText.getText().toString());     // TODO Remove and just store in a member variable???
                     return false;
                 }
             });
@@ -62,12 +61,15 @@ public class DayCreatorActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO implement
+                // Create new day
+                // increment exerciseId for the new day
+                mExerciseId++;
+                Day newDay = new Day(mDayId,"New Day", mExerciseId, 0);
+                mWorkoutCreatorViewModel.insert(newDay);
             }
         });
 
-        // Get schedule repository
-        mScheduleRepository = new ScheduleRepository(getApplication(), mScheduleId, mDayId, mExerciseId);
+        // Set view model
         mWorkoutCreatorViewModel = ViewModelProviders.of(this).get(WorkoutCreatorViewModel.class);
 
         // initialize a schedule object and a day table for the view model
@@ -92,7 +94,7 @@ public class DayCreatorActivity extends AppCompatActivity {
                                   RecyclerView.ViewHolder target) {
                 int from = viewHolder.getAdapterPosition();
                 int to = target.getAdapterPosition();
-                Collections.swap(mDayList, from, to);
+                //Collections.swap(mWorkoutCreatorViewModel.getmAllMatchingDays(), from, to); TODO might need to fix this or just use the orders later
                 mAdapter.notifyItemMoved(from,to);
                 return true;
             }
@@ -100,9 +102,9 @@ public class DayCreatorActivity extends AppCompatActivity {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder,
                                  int direction) {
-                mDayList.remove(viewHolder.getAdapterPosition()); //TODO remove the item from the view model and database
-                mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-                // save schedule state here?
+                int position = viewHolder.getAdapterPosition();
+                Day deletedDay = mAdapter.getDayAtPosition(position);
+                mWorkoutCreatorViewModel.deleteDay(deletedDay);
             }
         });
         helper.attachToRecyclerView(mRecyclerView);
@@ -141,7 +143,6 @@ public class DayCreatorActivity extends AppCompatActivity {
         mWorkoutCreatorViewModel.insert(scheduleBase);
         // Create the base day object
         Day dayBase = new Day(mDayId,"New Day", mExerciseId, 0);
-        mDayList.add(dayBase);
         mWorkoutCreatorViewModel.insert(dayBase);
         // Create the base exercise object
         Exercise exerciseBase = new Exercise(mExerciseId, "New Exercise", "", 0, 0);
