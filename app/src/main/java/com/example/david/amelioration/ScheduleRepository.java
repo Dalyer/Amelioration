@@ -53,6 +53,10 @@ public class ScheduleRepository {
         new insertDayAsyncTask(mDayDao).execute(day);
     }
 
+    public void deleteDay(Day day) {
+        new deleteDayAsyncTask(mDayDao).execute(day);
+    }
+
     // Exercise based methods
     LiveData<List<Exercise>> getmAllMatchingExercises() {
         return mAllMatchingExercises;
@@ -117,6 +121,21 @@ public class ScheduleRepository {
         @Override
         protected Void doInBackground(final Exercise... params) {
             mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    private static class deleteDayAsyncTask extends AsyncTask<Day, Void, Void> {
+
+        private DayDao mAsyncTaskDao;
+
+        deleteDayAsyncTask(DayDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Day... params) {
+            mAsyncTaskDao.deleteDay(params[0]);
             return null;
         }
     }

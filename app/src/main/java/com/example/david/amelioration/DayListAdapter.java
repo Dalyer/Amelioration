@@ -49,8 +49,8 @@ public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.DayViewH
         notifyDataSetChanged();
     }
 
-    void setScheduleName(String name) {
-        mScheduleName = name;
+    public Day getDayAtPosition (int position) {
+        return mDayList.get(position);
     }
 
     class DayViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

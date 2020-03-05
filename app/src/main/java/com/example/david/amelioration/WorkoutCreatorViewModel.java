@@ -53,4 +53,8 @@ public class WorkoutCreatorViewModel extends AndroidViewModel {
     public void insert(Exercise exercise) {
         mRepo.insert(exercise);
     }
+
+    public void deleteDay(Day day) {
+        mRepo.deleteDay(day);
+    }
 }
