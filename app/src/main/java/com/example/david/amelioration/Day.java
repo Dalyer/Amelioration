@@ -40,5 +40,6 @@ public class Day {
     }
 
     // setters
+    //TODO add a setter for order
 
 }
