@@ -39,7 +39,7 @@ public class ScheduleRepository {
     }
 
     public void deleteAll() {
-        new deleteAllAsyncTask(mScheduleDao).execute();
+        new deleteAllAsyncTask(mScheduleDao, mDayDao, mExerciseDao).execute();
     }
 
     // TODO add a wrapper for getting a specific schedule
@@ -67,15 +67,21 @@ public class ScheduleRepository {
     }
 
     private static class deleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
-        private ScheduleDao mAsyncTaskDao;
+        private ScheduleDao mAsyncTaskScheduleDao;
+        private DayDao mAsyncTaskDayDao;
+        private ExerciseDao mAsyncTaskExerciseDao;
 
-        deleteAllAsyncTask(ScheduleDao dao) {
-            mAsyncTaskDao = dao;
+        deleteAllAsyncTask(ScheduleDao sdao, DayDao ddao,ExerciseDao edao) {
+            mAsyncTaskScheduleDao = sdao;
+            mAsyncTaskDayDao = ddao;
+            mAsyncTaskExerciseDao = edao;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            mAsyncTaskDao.deleteAll();
+            mAsyncTaskScheduleDao.deleteAll();
+            mAsyncTaskDayDao.deleteAll();
+            mAsyncTaskExerciseDao.deleteAll();
             return null;
         }
     }
