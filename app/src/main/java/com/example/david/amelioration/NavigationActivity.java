@@ -75,6 +75,9 @@ public class NavigationActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_new_workout_designer) {
+            // Clear database
+            ScheduleRepository mRepo = new ScheduleRepository(getApplication(), 0, 0, 0); // dummy values used
+            mRepo.deleteAll();
             Intent intent = new Intent(this, DayCreatorActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_workouts) {
